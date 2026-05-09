@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="forest">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -366,6 +366,74 @@ body{display:flex;flex-direction:column}
 }
 .sb-overlay{display:none}
 input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:pointer}
+
+/* ══ THEMES ══ */
+[data-theme="forest"] {
+  --bg-base:#1a1d1a;--bg-panel:#212421;--bg-card:#272b27;--bg-hover:#2e322e;--bg-input:#1c201c;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#7cb87c;--accent-dim:#3d6b3d;--accent-glow:rgba(124,184,124,0.1);--accent-text:#a8d4a8;
+  --text-primary:#e8ede8;--text-secondary:#adb8ad;--text-muted:#6b786b;
+}
+[data-theme="rose"] {
+  --bg-base:#1d1a1c;--bg-panel:#252123;--bg-card:#2c2729;--bg-hover:#332e31;--bg-input:#201d1f;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#d4789a;--accent-dim:#7a3a54;--accent-glow:rgba(212,120,154,0.1);--accent-text:#e8a8c0;
+  --text-primary:#ede8eb;--text-secondary:#b8adb3;--text-muted:#786b72;
+  --tag-work-bg:rgba(212,120,154,0.14);--tag-work-text:#e8a8c0;
+  --tag-urgent-bg:rgba(218,110,90,0.14);--tag-urgent-text:#e89080;
+  --tag-personal-bg:rgba(180,140,220,0.14);--tag-personal-text:#c8a8e8;
+  --tag-meeting-bg:rgba(200,170,80,0.14);--tag-meeting-text:#d8c070;
+}
+[data-theme="violet"] {
+  --bg-base:#1a1a22;--bg-panel:#22222e;--bg-card:#2a2a38;--bg-hover:#31313f;--bg-input:#1e1e28;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#9b7fd4;--accent-dim:#5a3e8a;--accent-glow:rgba(155,127,212,0.1);--accent-text:#c4aee8;
+  --text-primary:#eae8f0;--text-secondary:#b0adc0;--text-muted:#6e6b82;
+  --tag-work-bg:rgba(155,127,212,0.14);--tag-work-text:#c4aee8;
+  --tag-urgent-bg:rgba(218,110,90,0.14);--tag-urgent-text:#e89080;
+  --tag-personal-bg:rgba(100,160,220,0.14);--tag-personal-text:#90c0e8;
+  --tag-meeting-bg:rgba(200,170,80,0.14);--tag-meeting-text:#d8c070;
+}
+[data-theme="ocean"] {
+  --bg-base:#191e24;--bg-panel:#202630;--bg-card:#272f3a;--bg-hover:#2e3844;--bg-input:#1c2128;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#5bb8c8;--accent-dim:#2e6e7a;--accent-glow:rgba(91,184,200,0.1);--accent-text:#98d8e4;
+  --text-primary:#e4edf0;--text-secondary:#a8b8c0;--text-muted:#647880;
+  --tag-work-bg:rgba(91,184,200,0.14);--tag-work-text:#98d8e4;
+  --tag-urgent-bg:rgba(218,110,90,0.14);--tag-urgent-text:#e89080;
+  --tag-personal-bg:rgba(130,150,210,0.14);--tag-personal-text:#a0b4e0;
+  --tag-meeting-bg:rgba(200,170,80,0.14);--tag-meeting-text:#d8c070;
+}
+[data-theme="amber"] {
+  --bg-base:#1e1c17;--bg-panel:#26231c;--bg-card:#2e2a22;--bg-hover:#35312a;--bg-input:#201e19;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#d4a84b;--accent-dim:#7a5e20;--accent-glow:rgba(212,168,75,0.1);--accent-text:#e8cc90;
+  --text-primary:#f0ece0;--text-secondary:#b8b098;--text-muted:#7a7260;
+  --tag-work-bg:rgba(212,168,75,0.14);--tag-work-text:#e8cc90;
+  --tag-urgent-bg:rgba(218,110,90,0.14);--tag-urgent-text:#e89080;
+  --tag-personal-bg:rgba(130,150,210,0.14);--tag-personal-text:#a0b4e0;
+  --tag-meeting-bg:rgba(180,120,200,0.14);--tag-meeting-text:#d090e0;
+}
+[data-theme="slate"] {
+  --bg-base:#17191e;--bg-panel:#1e2128;--bg-card:#252932;--bg-hover:#2c313b;--bg-input:#1a1d24;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --accent:#6e8fc2;--accent-dim:#3a5280;--accent-glow:rgba(110,143,194,0.1);--accent-text:#a0bce0;
+  --text-primary:#e4e8f0;--text-secondary:#a0a8b8;--text-muted:#606880;
+  --tag-work-bg:rgba(110,143,194,0.14);--tag-work-text:#a0bce0;
+  --tag-urgent-bg:rgba(218,110,90,0.14);--tag-urgent-text:#e89080;
+  --tag-personal-bg:rgba(155,127,212,0.14);--tag-personal-text:#c4aee8;
+  --tag-meeting-bg:rgba(200,170,80,0.14);--tag-meeting-text:#d8c070;
+}
+
+/* ── THEME PICKER UI ── */
+.theme-picker-wrap{padding:14px 20px;border-top:1px solid var(--border)}
+.theme-picker-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:10px;display:block}
+.theme-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.theme-swatch{border-radius:10px;padding:8px 6px;cursor:pointer;border:2px solid transparent;transition:all .15s;text-align:center}
+.theme-swatch:hover{transform:translateY(-1px)}
+.theme-swatch.active{border-color:var(--text-primary)}
+.theme-swatch-color{width:28px;height:28px;border-radius:50%;margin:0 auto 5px}
+.theme-swatch-name{font-size:9px;color:var(--text-muted);font-weight:500;letter-spacing:.03em}
 </style>
 </head>
 <body>
@@ -409,7 +477,12 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:p
     <div class="nav-item" data-view="journey"><svg class="nav-icon" viewBox="0 0 14 14" fill="none"><path d="M2 11L5 7l3 3 4-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>My Journey</div>
     <div class="nav-item" data-view="resources"><svg class="nav-icon" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5h6M4 7.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Resources</div>
   </div>
-  <div class="sb-footer">
+  
+      <div class="theme-picker-wrap">
+        <span class="theme-picker-label">Theme</span>
+        <div class="theme-swatches" id="theme-swatches"></div>
+      </div>
+<div class="sb-footer">
     <div class="sb-user" id="sb-user-info">
       <div class="sb-avatar" id="sb-avatar-el"></div>
       <div class="sb-uname" id="sb-uname-el">Loading…</div>
@@ -925,9 +998,52 @@ document.getElementById('sb-overlay').addEventListener('click',()=>{document.get
 
 // ══ INIT APP (after login) ══
 function initApp(){
+  loadUserTheme();
   const h=new Date().getHours();document.getElementById('greeting').textContent=h<12?'Good morning!':h<17?'Good afternoon!':'Good evening!';document.getElementById('today-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   renderMotivation();refreshPtagDDs();renderAllTasks();renderAllEvents();renderAllLinks();renderKanban();renderResources();renderMilestones();renderMiniCal();renderFullCal();renderGcalUI();
   checkOAuthRedirect();
+}
+
+
+// ══ THEMES ══
+const THEMES = [
+  {id:'forest', name:'Forest', accent:'#7cb87c', bg:'#1a1d1a'},
+  {id:'rose',   name:'Rose',   accent:'#d4789a', bg:'#1d1a1c'},
+  {id:'violet', name:'Violet', accent:'#9b7fd4', bg:'#1a1a22'},
+  {id:'ocean',  name:'Ocean',  accent:'#5bb8c8', bg:'#191e24'},
+  {id:'amber',  name:'Amber',  accent:'#d4a84b', bg:'#1e1c17'},
+  {id:'slate',  name:'Slate',  accent:'#6e8fc2', bg:'#17191e'},
+];
+
+function applyTheme(id) {
+  document.documentElement.setAttribute('data-theme', id);
+  if(currentUser) {
+    localStorage.setItem('ws_u_' + currentUser.id + '_theme', id);
+  }
+  renderThemePicker();
+}
+
+function renderThemePicker() {
+  const wrap = document.getElementById('theme-swatches');
+  if(!wrap) return;
+  const current = document.documentElement.getAttribute('data-theme') || 'forest';
+  wrap.innerHTML = '';
+  THEMES.forEach(t => {
+    const sw = document.createElement('div');
+    sw.className = 'theme-swatch' + (current === t.id ? ' active' : '');
+    sw.style.background = t.bg + '99';
+    sw.innerHTML = '<div class="theme-swatch-color" style="background:' + t.accent + '"></div><div class="theme-swatch-name">' + t.name + '</div>';
+    sw.addEventListener('click', () => applyTheme(t.id));
+    wrap.appendChild(sw);
+  });
+}
+
+// Load user's saved theme
+function loadUserTheme() {
+  if(!currentUser) return;
+  const saved = localStorage.getItem('ws_u_' + currentUser.id + '_theme') || 'forest';
+  document.documentElement.setAttribute('data-theme', saved);
+  renderThemePicker();
 }
 
 // ══ BOOT ══
