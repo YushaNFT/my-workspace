@@ -251,37 +251,14 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:p
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-screen" id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">My Workspace</div>
-    <div class="login-sub">Community Operations + Personal Dashboard</div>
-    <div class="user-cards" id="user-cards"></div>
-    <button class="add-user-btn" id="add-user-btn">+ Add new user</button>
-  </div>
-</div>
-
-<!-- PIN -->
-<div class="pin-screen" id="pin-screen">
-  <div class="pin-box">
-    <div class="pin-av" id="pin-av"></div>
-    <div class="pin-name" id="pin-name"></div>
-    <div class="pin-hint">Enter your 4-digit PIN</div>
-    <div class="pin-dots" id="pin-dots"></div>
-    <div class="pin-numpad" id="pin-numpad"></div>
-    <div class="pin-err" id="pin-err"></div>
-    <button class="pin-back" id="pin-back">← Back</button>
-  </div>
-</div>
-
 <!-- SHELL -->
-<div class="shell" id="shell">
+<div class="shell on" id="shell">
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
   <div class="sb-brand">
     <div class="sb-logo">My Workspace</div>
-    <div class="sb-sub" id="sb-sub">dashboard ✦</div>
+    <div class="sb-sub">dashboard ✦</div>
   </div>
   <div class="sb-section">Main</div>
   <div class="nav-item on" data-view="dashboard">
@@ -311,12 +288,9 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:p
   </div>
   <div class="sb-footer">
     <div class="sb-user">
-      <div class="sb-av" id="sb-av"></div>
-      <div class="sb-uname" id="sb-uname">...</div>
-      <div class="sb-btns">
-        <button class="sb-btn" id="ai-settings-btn" title="AI Settings">⚙</button>
-        <button class="sb-btn danger" id="sb-logout" title="Switch user">⇄</button>
-      </div>
+      <div class="sb-av" style="background:var(--acd)">ME</div>
+      <div class="sb-uname">My Workspace</div>
+<button class="sb-btn" id="ai-settings-btn" title="AI Settings">⚙ AI Settings</button>
     </div>
   </div>
 </div>
@@ -523,14 +497,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:p
 </div><!-- /shell -->
 
 <!-- MODALS -->
-<div class="mov" id="mo-nu">
-  <div class="modal">
-    <div class="mttl">Add new user</div>
-    <span class="mlbl">Name</span><input class="inp" id="nu-name" placeholder="Your name"/>
-    <span class="mlbl">4-digit PIN</span><input class="inp" id="nu-pin" type="password" maxlength="4" placeholder="Choose a 4-digit PIN" inputmode="numeric"/>
-    <span class="mlbl">Color</span><div class="swatches" id="nu-swatches"></div>
-    <div class="mbtns"><button class="btn btn-g" data-close="mo-nu">Cancel</button><button class="btn" id="nu-save">Create user</button></div>
-  </div>
+
 </div>
 
 <div class="mov" id="mo-ev">
@@ -616,10 +583,10 @@ let CU = null; // current user
 
 // Per-user storage
 const U = {
-  get: k => { try { return JSON.parse(localStorage.getItem('ws_u_'+CU.id+'_'+k)) || [] } catch { return [] } },
-  set: (k,v) => localStorage.setItem('ws_u_'+CU.id+'_'+k, JSON.stringify(v)),
-  str: k => localStorage.getItem('ws_u_'+CU.id+'_'+k) || '',
-  ss: (k,v) => localStorage.setItem('ws_u_'+CU.id+'_'+k, v)
+  get: k => { try { return JSON.parse(localStorage.getItem('ws_data_'+k)) || [] } catch { return [] } },
+  set: (k,v) => localStorage.setItem('ws_data_'+k, JSON.stringify(v)),
+  str: k => localStorage.getItem('ws_data_'+k) || '',
+  ss: (k,v) => localStorage.setItem('ws_data_'+k, v)
 };
 
 const $ = id => document.getElementById(id);
@@ -682,88 +649,8 @@ function renderThemeGrid() {
 }
 
 // ═══════════════════════════════════════
-// LOGIN
+// DIRECT INIT (no login)
 // ═══════════════════════════════════════
-function renderLogin() {
-  users = G.get('users');
-  $('login-screen').style.display = 'flex';
-  $('pin-screen').style.display = 'none';
-  $('shell').classList.remove('on');
-  const c = $('user-cards'); c.innerHTML = '';
-  users.forEach(u => {
-    const d = document.createElement('div'); d.className = 'user-card';
-    d.innerHTML = `<div class="uav" style="background:${u.color}">${u.name[0].toUpperCase()}</div>
-      <div><div class="unm">${u.name}</div><div class="url">Click to enter PIN</div></div>`;
-    d.addEventListener('click', () => showPin(u));
-    c.appendChild(d);
-  });
-  if (!users.length) c.innerHTML = '<div style="font-size:13px;color:var(--t3);text-align:center;padding:18px 0">No users yet — add one to get started!</div>';
-}
-
-function showPin(u) {
-  $('login-screen').style.display = 'none';
-  $('pin-screen').style.display = 'flex';
-  $('pin-av').textContent = u.name[0].toUpperCase();
-  $('pin-av').style.background = u.color;
-  $('pin-name').textContent = u.name;
-  $('pin-err').textContent = '';
-  let entered = '';
-  const dots = $('pin-dots'); dots.innerHTML = '';
-  for (let i = 0; i < 4; i++) { const d = document.createElement('div'); d.className = 'pin-dot'; d.id = 'pd'+i; dots.appendChild(d); }
-  const np = $('pin-numpad'); np.innerHTML = '';
-  [1,2,3,4,5,6,7,8,9,'',0,'⌫'].forEach(k => {
-    const b = document.createElement('button'); b.className = 'pin-key';
-    b.textContent = k === '' ? '' : k;
-    if (k === '') b.style.visibility = 'hidden';
-    b.addEventListener('click', () => {
-      if (k === '⌫') entered = entered.slice(0,-1);
-      else if (k !== '' && entered.length < 4) entered += k;
-      for (let i=0;i<4;i++) $('pd'+i).classList.toggle('filled', i < entered.length);
-      if (entered.length === 4) {
-        if (hashPin(entered) === u.pin) loadUser(u);
-        else { $('pin-err').textContent = 'Incorrect PIN. Try again.'; entered = ''; for(let i=0;i<4;i++) $('pd'+i).classList.remove('filled'); }
-      }
-    });
-    np.appendChild(b);
-  });
-}
-
-function loadUser(u) {
-  CU = u;
-  $('pin-screen').style.display = 'none';
-  $('login-screen').style.display = 'none';
-  $('shell').classList.add('on');
-  $('sb-av').textContent = u.name[0].toUpperCase();
-  $('sb-av').style.background = u.color;
-  $('sb-uname').textContent = u.name;
-  $('sb-sub').textContent = u.name + "'s workspace ✦";
-  const t = U.str('theme') || 'forest';
-  document.documentElement.setAttribute('data-theme', t);
-  renderThemeGrid();
-  loadUserData();
-  initApp();
-}
-
-$('pin-back').addEventListener('click', renderLogin);
-$('sb-logout').addEventListener('click', () => { CU = null; renderLogin(); });
-
-// New user
-let nuColor = PAL[0];
-$('add-user-btn').addEventListener('click', () => {
-  nuColor = PAL[0];
-  buildSwatches('nu-swatches', nuColor, c => nuColor = c);
-  openM('mo-nu');
-});
-$('nu-save').addEventListener('click', () => {
-  const name = $('nu-name').value.trim(), pin = $('nu-pin').value.trim();
-  if (!name) { toast('Enter a name.'); return; }
-  if (!/^\d{4}$/.test(pin)) { toast('PIN must be exactly 4 digits.'); return; }
-  const u = { id: 'u'+Date.now(), name, color: nuColor, pin: hashPin(pin) };
-  users = G.get('users'); users.push(u); G.set('users', users);
-  closeM('mo-nu'); $('nu-name').value = ''; $('nu-pin').value = '';
-  renderLogin(); toast('User created! Click your name to log in.');
-});
-
 // ═══════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════
@@ -818,7 +705,7 @@ $('mot-btn').addEventListener('click', () => { qi = (qi+1)%QUOTES.length; render
 // ═══════════════════════════════════════
 // AI
 // ═══════════════════════════════════════
-function getAiKey() { return CU ? U.str('aikey') : ''; }
+functifunction getAiKey() { return U.str('aikey'); }
 
 async function callAI(prompt, maxTokens = 800) {
   const key = getAiKey();
@@ -841,11 +728,7 @@ async function callAI(prompt, maxTokens = 800) {
 
 function loadingHTML() { return '<div class="ldots"><span></span><span></span><span></span></div>'; }
 
-$('ai-settings-btn').addEventListener('click', () => {
-  $('ai-key-inp').value = getAiKey();
-  $('ai-key-status').textContent = getAiKey() ? '✓ API key saved' : '';
-  openM('mo-ai');
-});
+$('ai-settings-btn').addEventListener('click', () => { $('ai-key-inp').value = getAiKey(); $('ai-key-status').textContent = getAiKey() ? '✓ API key saved' : ''; openM('mo-ai'); });
 $('ai-key-save').addEventListener('click', () => {
   const k = $('ai-key-inp').value.trim();
   if (!k) { toast('Enter your API key.'); return; }
