@@ -2,1099 +2,519 @@
 <html lang="en" data-theme="forest">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>My Workspace</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{font-family:"Plus Jakarta Sans",sans-serif;font-size:14px;line-height:1.6}
-[data-theme="forest"]{--bg:#1a1d1a;--panel:#212421;--card:#272b27;--hover:#2e322e;--inp:#1c201c;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#7cb87c;--acd:#3d6b3d;--acg:rgba(124,184,124,0.1);--act:#a8d4a8;--t1:#e8ede8;--t2:#adb8ad;--t3:#6b786b}
-[data-theme="rose"]{--bg:#1d1a1c;--panel:#252123;--card:#2c2729;--hover:#332e31;--inp:#201d1f;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#d4789a;--acd:#7a3a54;--acg:rgba(212,120,154,0.1);--act:#e8a8c0;--t1:#ede8eb;--t2:#b8adb3;--t3:#786b72}
-[data-theme="violet"]{--bg:#1a1a22;--panel:#22222e;--card:#2a2a38;--hover:#31313f;--inp:#1e1e28;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#9b7fd4;--acd:#5a3e8a;--acg:rgba(155,127,212,0.1);--act:#c4aee8;--t1:#eae8f0;--t2:#b0adc0;--t3:#6e6b82}
-[data-theme="ocean"]{--bg:#191e24;--panel:#202630;--card:#272f3a;--hover:#2e3844;--inp:#1c2128;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#5bb8c8;--acd:#2e6e7a;--acg:rgba(91,184,200,0.1);--act:#98d8e4;--t1:#e4edf0;--t2:#a8b8c0;--t3:#647880}
-[data-theme="amber"]{--bg:#1e1c17;--panel:#26231c;--card:#2e2a22;--hover:#35312a;--inp:#201e19;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#d4a84b;--acd:#7a5e20;--acg:rgba(212,168,75,0.1);--act:#e8cc90;--t1:#f0ece0;--t2:#b8b098;--t3:#7a7260}
-[data-theme="slate"]{--bg:#17191e;--panel:#1e2128;--card:#252932;--hover:#2c313b;--inp:#1a1d24;--bd:rgba(255,255,255,0.07);--bds:rgba(255,255,255,0.04);--ac:#6e8fc2;--acd:#3a5280;--acg:rgba(110,143,194,0.1);--act:#a0bce0;--t1:#e4e8f0;--t2:#a0a8b8;--t3:#606880}
-html,body{height:100%;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
-
-/* LOGIN */
-.login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column}
-.login-box{background:var(--panel);border:1px solid var(--bd);border-radius:20px;padding:40px 36px;width:360px;text-align:center}
-.login-logo{font-family:"Lora",serif;font-size:22px;color:var(--t1);margin-bottom:4px;font-weight:600}
-.login-sub{font-size:12px;color:var(--t3);margin-bottom:28px}
-.user-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.user-card{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .15s;text-align:left}
-.user-card:hover{border-color:var(--acd);background:var(--hover)}
-.uav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;color:#fff}
-.unm{font-size:14px;font-weight:600;color:var(--t1)}
-.url{font-size:10px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
-.add-user-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:transparent;border:1.5px dashed var(--bd);border-radius:12px;padding:13px;font-size:13px;color:var(--t3);cursor:pointer;font-family:inherit;transition:all .15s}
-.add-user-btn:hover{border-color:var(--acd);color:var(--act)}
-
-/* PIN */
-.pin-screen{display:none;align-items:center;justify-content:center;min-height:100vh}
-.pin-box{background:var(--panel);border:1px solid var(--bd);border-radius:20px;padding:40px 36px;width:320px;text-align:center}
-.pin-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 12px;color:#fff}
-.pin-name{font-family:"Lora",serif;font-size:18px;color:var(--t1);margin-bottom:4px}
-.pin-hint{font-size:12px;color:var(--t3);margin-bottom:20px}
-.pin-dots{display:flex;gap:12px;justify-content:center;margin-bottom:22px}
-.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--bd);transition:all .15s}
-.pin-dot.filled{background:var(--ac);border-color:var(--ac)}
-.pin-numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.pin-key{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;font-size:18px;font-weight:500;color:var(--t1);cursor:pointer;transition:all .15s;font-family:inherit}
-.pin-key:hover{background:var(--hover);border-color:var(--acd)}
-.pin-key:active{transform:scale(.95)}
-.pin-err{font-size:12px;color:#c46050;margin-top:6px;min-height:18px}
-.pin-back{background:none;border:none;color:var(--t3);font-size:12px;cursor:pointer;font-family:inherit;margin-top:4px}
-
-/* SHELL */
-.shell{display:none;min-height:100vh}.shell.on{display:flex}
-.sidebar{width:220px;min-width:220px;background:var(--panel);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:50;overflow-y:auto;transition:transform .3s}
-.sidebar::-webkit-scrollbar{display:none}
-.main{flex:1;margin-left:220px;display:flex;flex-direction:column;min-height:100vh}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 28px 0;flex-shrink:0}
-.content{padding:16px 28px 48px;flex:1}
-.view{display:none}.view.on{display:block}
-
-/* SIDEBAR */
-.sb-brand{padding:20px 16px 14px;border-bottom:1px solid var(--bd)}
-.sb-logo{font-family:"Lora",serif;font-size:15px;color:var(--t1);font-weight:600}
-.sb-sub{font-size:10px;color:var(--t3);margin-top:2px}
-.sb-section{padding:14px 0 5px 16px;font-size:9px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:12.5px;color:var(--t2);cursor:pointer;transition:all .15s;border-left:2px solid transparent;user-select:none}
-.nav-item:hover{color:var(--t1);background:var(--hover)}
-.nav-item.on{color:var(--act);background:var(--acg);border-left:2px solid var(--ac)}
-.nav-icon{width:14px;height:14px;flex-shrink:0;opacity:.65}.nav-item.on .nav-icon{opacity:1}
-.theme-wrap{padding:10px 16px 0}
-.theme-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:7px;display:block}
-.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}
-.th-sw{border-radius:8px;padding:6px 4px;cursor:pointer;border:2px solid transparent;transition:all .15s;text-align:center}
-.th-sw.on{border-color:var(--t1)}
-.th-sw-dot{width:20px;height:20px;border-radius:50%;margin:0 auto 3px}
-.th-sw-name{font-size:8px;color:var(--t3);font-weight:500}
-.sb-footer{padding:12px 16px;border-top:1px solid var(--bd);margin-top:auto}
-.sb-user{display:flex;align-items:center;gap:9px}
-.sb-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff}
-.sb-uname{font-size:12px;color:var(--t2);flex:1}
-.sb-btns{display:flex;gap:4px}
-.sb-btn{background:none;border:none;color:var(--t3);font-size:11px;cursor:pointer;font-family:inherit;padding:3px 6px;border-radius:5px;transition:all .15s}
-.sb-btn:hover{color:var(--act);background:var(--acg)}
-.sb-btn.danger:hover{color:#c46050;background:rgba(196,96,80,.08)}
-
-/* TOPBAR */
-.tb-greet{font-family:"Lora",serif;font-size:24px;color:var(--t1)}
-.tb-right{display:flex;align-items:center;gap:10px}
-.tb-date{font-size:12px;color:var(--t3)}
-.menu-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--t2);padding:4px}
-
-/* SHARED */
-.page-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:12px}
-.page-title{font-family:"Lora",serif;font-size:22px;color:var(--t1)}
-.page-sub{font-size:12px;color:var(--t3);margin-top:3px}
-.btn{display:inline-flex;align-items:center;gap:6px;background:var(--acd);color:var(--act);border:none;border-radius:9px;padding:9px 16px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s;white-space:nowrap}
-.btn:hover{background:var(--ac);color:var(--bg)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-g{background:none;border:1px solid var(--bd);color:var(--t2)}
-.btn-g:hover{border-color:var(--acd);color:var(--act);background:var(--acg)}
-.btn-d{background:rgba(196,96,80,.15);border:1px solid rgba(196,96,80,.3);color:#c46050}
-.btn-d:hover{background:rgba(196,96,80,.25)}
-.card{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:18px}
-.card-sm{background:var(--card);border:1px solid var(--bds);border-radius:10px;padding:14px}
-.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.pt{font-size:13px;font-weight:600;color:var(--t1)}
-.pa{font-size:11px;color:var(--ac);cursor:pointer;background:none;border:none;font-family:inherit;font-weight:500;transition:opacity .15s}
-.pa:hover{opacity:.7}
-.inp{background:var(--inp);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--t1);outline:none;transition:border .15s;width:100%}
-.inp::placeholder{color:var(--t3)}.inp:focus{border-color:var(--acd)}
-.sel{background:var(--inp);border:1px solid var(--bd);border-radius:9px;padding:9px 10px;font-size:12px;font-family:inherit;color:var(--t2);outline:none;cursor:pointer;width:100%}
-.sel:focus{border-color:var(--acd)}
-.txa{background:var(--inp);border:1px solid var(--bd);border-radius:9px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--t1);outline:none;resize:vertical;min-height:90px;line-height:1.6;width:100%}
-.txa::placeholder{color:var(--t3)}.txa:focus{border-color:var(--acd)}
-.lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:5px;display:block}
-.tag{display:inline-flex;align-items:center;font-size:10px;padding:3px 9px;border-radius:20px;font-weight:500}
-.tag-w{background:rgba(124,184,124,.14);color:#98d098}
-.tag-u{background:rgba(218,110,90,.14);color:#e89080}
-.tag-p{background:rgba(130,150,210,.14);color:#a0b4e0}
-.tag-m{background:rgba(200,170,80,.14);color:#d8c070}
-.tag-ac{background:var(--acg);color:var(--act)}
-.empty{font-size:13px;color:var(--t3);padding:20px 0;text-align:center}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-
-/* STAT CARDS */
-.sc{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;transition:border-color .2s}
-.sc:hover{border-color:var(--acd)}
-.sl{font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:8px;font-weight:600}
-.sn{font-family:"Lora",serif;font-size:30px;color:var(--t1);line-height:1}
-.ss{font-size:11px;color:var(--t3);margin-top:4px}
-.sa{color:var(--ac)}
-.s-up{color:#7cb87c;font-size:10px;margin-top:3px}
-.s-dn{color:#c46050;font-size:10px;margin-top:3px}
-
-/* TASKS */
-.ti{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;border-radius:8px;transition:background .12s;border-bottom:1px solid var(--bds)}
-.ti:last-child{border-bottom:none}
-.ti:hover{background:var(--hover)}
-.tcb{width:16px;height:16px;border:1.5px solid rgba(255,255,255,0.15);border-radius:5px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:3px}
-.tcb.done{background:var(--acd);border-color:var(--acd)}
-.tcb.done::after{content:"";width:6px;height:3.5px;border-left:1.5px solid var(--act);border-bottom:1.5px solid var(--act);transform:rotate(-45deg) translateY(-1px);display:block}
-.tinfo{flex:1;min-width:0;cursor:pointer}
-.ttxt{font-size:13px;color:var(--t1);line-height:1.5}
-.ttxt.done{color:var(--t3);text-decoration:line-through}
-.tmeta{display:flex;align-items:center;gap:5px;margin-top:4px;flex-wrap:wrap}
-.tdl{font-size:10px;font-weight:500}
-.tdl.soon{color:#c8a84b}.tdl.over{color:#c46050}.tdl.ok{color:var(--t3)}
-.tdel{font-size:14px;color:var(--t3);cursor:pointer;opacity:0;transition:opacity .15s;padding:2px 5px}
-.ti:hover .tdel{opacity:1}
-.add-row{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
-
-/* EVENTS */
-.ei{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bds)}
-.ei:last-child{border-bottom:none}
-.edot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.etime{font-size:11px;color:var(--t3);min-width:46px}
-.ename{font-size:13px;color:var(--t1);flex:1}
-.edel{font-size:13px;color:var(--t3);cursor:pointer;opacity:0}
-.ei:hover .edel{opacity:1}
-
-/* PROGRESS BAR */
-.pgw{background:var(--card);border-radius:4px;height:5px;overflow:hidden;margin:10px 0 6px}
-.pgf{height:100%;background:var(--ac);border-radius:4px;transition:width .5s ease}
-.pgn{font-size:12px;color:var(--t3)}
-
-/* AI STUFF */
-.ai-output{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-top:12px}
-.ai-output-lbl{font-size:10px;color:var(--act);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-.ai-output-txt{font-size:13px;color:var(--t1);line-height:1.75;white-space:pre-wrap}
-.ai-insight-box{background:var(--acg);border:1px solid var(--acd);border-radius:12px;padding:14px 16px;margin-top:12px}
-.ai-insight-txt{font-size:13px;color:var(--t1);line-height:1.7}
-.copy-btn{background:none;border:1px solid var(--bd);border-radius:6px;padding:4px 10px;font-size:10px;color:var(--t3);cursor:pointer;font-family:inherit;transition:all .15s}
-.copy-btn:hover{border-color:var(--acd);color:var(--act)}
-.ai-warn{background:rgba(212,168,75,.08);border:1px solid rgba(212,168,75,.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#d8c070;display:none}
-.ai-warn a{color:#d8c070;text-decoration:underline;cursor:pointer}
-.ldots{display:inline-flex;gap:4px;align-items:center;padding:4px 0}
-.ldots span{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:dp 1.4s infinite ease-in-out}
-.ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
-@keyframes dp{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
-
-/* EVENT GEN */
-.eg-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.eg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.eg-tab{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;color:var(--t3);border:1px solid var(--bd);background:none;font-family:inherit;transition:all .15s}
-.eg-tab.on{background:var(--acd);color:var(--act);border-color:var(--acd)}
-.eg-tab:disabled{opacity:.35;cursor:default}
-.eg-saved-item{background:var(--card);border:1px solid var(--bds);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;transition:border .15s}
-.eg-saved-item:hover{border-color:var(--acd)}
-
-/* CONTENT PIPELINE */
-.ct-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.ct-type-card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .15s}
-.ct-type-card:hover,.ct-type-card.on{border-color:var(--acd);background:var(--acg)}
-.ct-icon{font-size:20px;margin-bottom:5px;display:block;transition:transform .15s}
-.ct-type-card:hover .ct-icon{transform:scale(1.1)}
-.ct-name{font-size:11px;color:var(--t2);font-weight:500}
-.tone-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
-.tone-btn{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;color:var(--t3);border:1px solid var(--bd);background:none;font-family:inherit;transition:all .15s}
-.tone-btn.on{background:var(--acd);color:var(--act);border-color:var(--acd)}
-.ct-saved-item{background:var(--card);border:1px solid var(--bds);border-radius:10px;padding:12px 14px;margin-bottom:8px;position:relative;transition:border .15s}
-.ct-saved-item:hover{border-color:var(--acd)}
-.item-del{position:absolute;top:10px;right:12px;font-size:12px;color:var(--t3);opacity:0;cursor:pointer;transition:opacity .15s}
-.ct-saved-item:hover .item-del,.ops-item:hover .item-del{opacity:1}
-
-/* KPI */
-.kpi-chart-wrap{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
-.kpi-snap-item{background:var(--card);border:1px solid var(--bds);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:grid;grid-template-columns:60px repeat(3,1fr) 24px;align-items:center;gap:10px}
-
-/* OPS NOTES */
-.ops-tabs-row{display:flex;gap:4px;background:var(--card);border-radius:10px;padding:4px;margin-bottom:16px;flex-wrap:wrap;width:fit-content}
-.ops-tab-btn{padding:7px 14px;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:var(--t3);border:none;background:none;font-family:inherit;transition:all .15s}
-.ops-tab-btn.on{background:var(--panel);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
-.ops-item{background:var(--card);border:1px solid var(--bds);border-radius:10px;padding:12px 14px;margin-bottom:8px;position:relative;transition:border .15s}
-.ops-item:hover{border-color:var(--acd)}
-.ops-item-title{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:4px;padding-right:20px}
-.ops-item-body{font-size:12px;color:var(--t2);line-height:1.6}
-.ops-item-meta{font-size:10px;color:var(--t3);margin-top:6px}
-
-/* MODALS */
-.mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center}
-.mov.op{display:flex}
-.modal{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:24px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:mi .2s ease;max-height:90vh;overflow-y:auto}
-@keyframes mi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.modal-wide{width:480px}
-.mttl{font-family:"Lora",serif;font-size:18px;color:var(--t1);margin-bottom:18px}
-.mlbl{display:block;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;margin-top:12px;font-weight:500}
-.mlbl:first-of-type{margin-top:0}
-.mbtns{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
-.swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
-.sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
-.sw.on{border-color:#fff;transform:scale(1.1)}
-
-/* TOAST */
-.toast{position:fixed;bottom:22px;right:22px;background:var(--card);border:1px solid var(--bd);color:var(--t1);padding:11px 18px;border-radius:11px;font-size:13px;opacity:0;transform:translateY(8px);transition:all .25s;z-index:400;pointer-events:none;max-width:320px}
-.toast.on{opacity:1;transform:translateY(0)}
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}.sidebar.mop{transform:translateX(0)}
-  .main{margin-left:0}.g4,.g3{grid-template-columns:1fr 1fr}
-  .g2,.eg-form,.ct-type-grid{grid-template-columns:1fr}
-  .menu-toggle{display:flex;align-items:center}
-  .topbar{padding:14px 16px 0}.content{padding:12px 16px 32px}
-  .modal,.modal-wide{width:92vw}
-  .sbov{display:block!important}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
-.sbov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49}
-input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:pointer}
+
+:root{
+  --bg:#111827;
+  --panel:#1f2937;
+  --card:#374151;
+  --text:#f3f4f6;
+  --muted:#9ca3af;
+  --accent:#10b981;
+  --border:#4b5563;
+}
+
+[data-theme="ocean"]{
+  --bg:#0f172a;
+  --panel:#1e293b;
+  --card:#334155;
+  --accent:#38bdf8;
+}
+
+[data-theme="violet"]{
+  --bg:#1e1b4b;
+  --panel:#312e81;
+  --card:#4338ca;
+  --accent:#a78bfa;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:250px;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:20px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:30px;
+}
+
+.nav-btn{
+  width:100%;
+  border:none;
+  background:none;
+  color:var(--muted);
+  text-align:left;
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:8px;
+  transition:.2s;
+  font-size:15px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:var(--card);
+  color:var(--text);
+}
+
+.main{
+  flex:1;
+  padding:25px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.page-title{
+  font-size:32px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.stat{
+  font-size:40px;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:white;
+  margin-bottom:12px;
+}
+
+.textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.btn{
+  border:none;
+  background:var(--accent);
+  color:white;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn:hover{
+  opacity:.9;
+}
+
+.task{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--card);
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.task.done span{
+  text-decoration:line-through;
+  opacity:.6;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.api-box{
+  background:#111827;
+  border:1px dashed var(--border);
+  padding:16px;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.small{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+}
+
+.theme-grid{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.theme-btn{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  .app{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+  }
+}
 </style>
 </head>
 <body>
 
-<!-- SHELL -->
-<div class="shell on" id="shell">
+<div class="app">
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-  <div class="sb-brand">
-    <div class="sb-logo">My Workspace</div>
-    <div class="sb-sub">dashboard ✦</div>
-  </div>
-  <div class="sb-section">Main</div>
-  <div class="nav-item on" data-view="dashboard">
-    <svg class="nav-icon" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="currentColor"/><rect x="8" y="1" width="5" height="5" rx="1" fill="currentColor"/><rect x="1" y="8" width="5" height="5" rx="1" fill="currentColor"/><rect x="8" y="8" width="5" height="5" rx="1" fill="currentColor"/></svg>
-    Dashboard
-  </div>
-  <div class="sb-section">Community OS</div>
-  <div class="nav-item" data-view="event-gen">
-    <svg class="nav-icon" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4l-3.3 2.4 1.3 4L7 9 3.5 11.4l1.3-4L1.5 5h4z" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>
-    Event Generator
-  </div>
-  <div class="nav-item" data-view="content">
-    <svg class="nav-icon" viewBox="0 0 14 14" fill="none"><path d="M2 3h10M2 6h7M2 9h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-    Content Pipeline
-  </div>
-  <div class="nav-item" data-view="kpi">
-    <svg class="nav-icon" viewBox="0 0 14 14" fill="none"><path d="M2 11L5 7l3 2 4-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    KPI Tracker
-  </div>
-  <div class="nav-item" data-view="ops">
-    <svg class="nav-icon" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 5h6M4 7h4M4 9h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-    Operations Notes
-  </div>
-  <div class="theme-wrap">
-    <span class="theme-lbl">Theme</span>
-    <div class="theme-grid" id="theme-grid"></div>
-  </div>
-  <div class="sb-footer">
-    <div class="sb-user">
-      <div class="sb-av" style="background:var(--acd)">ME</div>
-      <div class="sb-uname">My Workspace</div>
-<button class="sb-btn" id="ai-settings-btn" title="AI Settings">⚙ AI Settings</button>
+  <aside class="sidebar">
+    <div class="logo">My Workspace</div>
+
+    <button class="nav-btn active" data-target="dashboard">Dashboard</button>
+    <button class="nav-btn" data-target="tasks">Tasks</button>
+    <button class="nav-btn" data-target="events">Events</button>
+    <button class="nav-btn" data-target="content">Content Pipeline</button>
+    <button class="nav-btn" data-target="settings">Settings</button>
+
+    <div class="theme-grid">
+      <button class="theme-btn" style="background:#10b981" onclick="setTheme('forest')"></button>
+      <button class="theme-btn" style="background:#38bdf8" onclick="setTheme('ocean')"></button>
+      <button class="theme-btn" style="background:#a78bfa" onclick="setTheme('violet')"></button>
     </div>
-  </div>
-</div>
-<div class="sbov" id="sbov"></div>
+  </aside>
 
-<!-- MAIN -->
-<div class="main">
-  <div class="topbar">
-    <div style="display:flex;align-items:center;gap:12px">
-      <button class="menu-toggle" id="menu-toggle">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <div class="tb-greet" id="greeting"></div>
-    </div>
-    <div class="tb-right">
-      <div class="tb-date" id="today-date"></div>
-    </div>
-  </div>
-  <div class="content">
+  <main class="main">
 
-  <!-- ═══ DASHBOARD ═══ -->
-  <div class="view on" id="view-dashboard">
-    <div class="g4" style="margin-bottom:16px" id="dash-stats"></div>
+    <section id="dashboard" class="section active">
+      <div class="page-title">Dashboard</div>
 
-    <!-- motivation -->
-    <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:14px">
-      <div style="font-size:22px;flex-shrink:0" id="mot-icon">🌱</div>
-      <div style="flex:1">
-        <div style="font-family:'Lora',serif;font-size:14px;color:var(--t1);font-style:italic;line-height:1.6" id="mot-q"></div>
-        <div style="font-size:11px;color:var(--t3);margin-top:3px" id="mot-a"></div>
+      <div class="grid">
+        <div class="card">
+          <h3>Total Tasks</h3>
+          <div class="stat" id="taskCount">0</div>
+        </div>
+
+        <div class="card">
+          <h3>Upcoming Events</h3>
+          <div class="stat" id="eventCount">0</div>
+        </div>
       </div>
-      <button style="background:none;border:1px solid var(--bd);border-radius:7px;padding:6px 11px;font-size:11px;color:var(--t3);cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s" id="mot-btn" onmouseover="this.style.borderColor='var(--acd)'" onmouseout="this.style.borderColor='var(--bd)'">New quote</button>
-    </div>
 
-    <div class="g2" style="margin-bottom:16px">
-      <!-- Tasks -->
       <div class="card">
-        <div class="ph"><span class="pt">Today's tasks</span><button class="pa" id="dash-clear-done">Clear done</button></div>
-        <div id="dash-task-list"></div>
-        <div class="add-row">
-          <input class="inp" id="dash-task-inp" placeholder="Add a task..." style="flex:1;min-width:120px"/>
-          <select class="sel" id="dash-task-tag" style="width:auto">
-            <option value="work">Work</option><option value="urgent">Urgent</option><option value="personal">Personal</option><option value="meeting">Meeting</option>
-          </select>
-          <button class="btn" id="dash-task-add">Add</button>
-        </div>
+        <h3>Motivation</h3>
+        <p id="quoteText">Build consistently. Momentum compounds.</p>
       </div>
-      <!-- Events -->
+    </section>
+
+    <section id="tasks" class="section">
+      <div class="page-title">Tasks</div>
+
       <div class="card">
-        <div class="ph"><span class="pt">Upcoming events</span><button class="pa" id="dash-ev-add-btn">+ Add</button></div>
-        <div id="dash-ev-list"></div>
+        <input id="taskInput" class="input" placeholder="Add a task..."/>
+        <button class="btn" onclick="addTask()">Add Task</button>
       </div>
-    </div>
 
-    <!-- KPI snapshot on dash -->
-    <div class="card" style="margin-bottom:16px">
-      <div class="ph"><span class="pt">KPI Snapshot</span><button class="pa" onclick="goView('kpi')">View full →</button></div>
-      <div class="g3" id="dash-kpi-snap"></div>
-    </div>
-
-    <!-- Quick AI actions -->
-    <div class="card">
-      <div class="ph"><span class="pt">Quick AI Actions</span><span style="font-size:10px;color:var(--t3)">Powered by OpenAI</span></div>
-      <div id="dash-ai-warn" class="ai-warn">⚠️ Add your OpenAI API key to use AI features. <a onclick="openM('mo-ai')">Add key →</a></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-        <button class="btn btn-g" onclick="quickAI('weekly_summary')">📊 Weekly Summary</button>
-        <button class="btn btn-g" onclick="quickAI('engagement_tip')">💡 Engagement Tip</button>
-        <button class="btn btn-g" onclick="quickAI('event_idea')">🎉 Event Idea</button>
-        <button class="btn btn-g" onclick="quickAI('announcement_idea')">📣 Announcement Idea</button>
+      <div class="card">
+        <h3>Task List</h3>
+        <div id="taskList"></div>
       </div>
-      <div id="dash-ai-out"></div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ═══ EVENT GENERATOR ═══ -->
-  <div class="view" id="view-event-gen">
-    <div class="page-head">
-      <div>
-        <div class="page-title">Event Generator</div>
-        <div class="page-sub">AI-powered community event creation — fills in everything</div>
-      </div>
-    </div>
-    <div id="eg-ai-warn" class="ai-warn">⚠️ Add your OpenAI API key to use AI features. <a onclick="openM('mo-ai')">Add key →</a></div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="pt" style="margin-bottom:14px">Event Details</div>
-      <div class="eg-form">
-        <div><span class="lbl">Event type</span>
-          <select class="sel" id="eg-type"><option>Trivia</option><option>AMA</option><option>Giveaway</option><option>Contest</option><option>Community Call</option><option>Game Night</option><option>Art Competition</option><option>Meme Contest</option><option>Collab Event</option><option>Other</option></select>
-        </div>
-        <div><span class="lbl">Community vibe / project</span><input class="inp" id="eg-vibe" placeholder="e.g. Web3 NFT project, Gaming DAO..."/></div>
-        <div><span class="lbl">Goal of the event</span><input class="inp" id="eg-goal" placeholder="e.g. Boost engagement, onboard members..."/></div>
-        <div><span class="lbl">Rewards / prizes</span><input class="inp" id="eg-rew" placeholder="e.g. 0.1 ETH, WL spots, merch..."/></div>
-        <div><span class="lbl">Community size</span>
-          <select class="sel" id="eg-size"><option>Small (&lt;500)</option><option>Medium (500–5k)</option><option>Large (5k–50k)</option><option>Very large (50k+)</option></select>
-        </div>
-        <div><span class="lbl">Format</span>
-          <select class="sel" id="eg-fmt"><option>Discord text</option><option>Discord voice</option><option>Twitter Spaces</option><option>Telegram</option><option>Mixed</option></select>
-        </div>
-        <div><span class="lbl">Duration</span>
-          <select class="sel" id="eg-dur"><option>30 min</option><option>1 hour</option><option>2 hours</option><option>All day</option><option>Multi-day</option></select>
-        </div>
-        <div><span class="lbl">Sponsor / project info (optional)</span><input class="inp" id="eg-spon" placeholder="e.g. Partnering with ProjectX..."/></div>
-      </div>
-      <button class="btn" id="eg-gen-btn">✨ Generate Event Pack</button>
-    </div>
+    <section id="events" class="section">
+      <div class="page-title">Events</div>
 
-    <!-- Output tabs -->
-    <div id="eg-output-section" style="display:none">
-      <div class="eg-tabs" id="eg-tabs"></div>
-      <div id="eg-output-body"></div>
-      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
-        <button class="btn btn-g" id="eg-regen-btn">⟳ Regenerate</button>
-        <button class="btn btn-g" id="eg-save-btn">💾 Save pack</button>
+      <div class="card">
+        <input id="eventName" class="input" placeholder="Event name"/>
+        <input id="eventDate" type="date" class="input"/>
+        <button class="btn" onclick="addEvent()">Add Event</button>
       </div>
-    </div>
 
-    <!-- Saved packs -->
-    <div class="card" style="margin-top:16px">
-      <div class="ph"><span class="pt">Saved event packs</span></div>
-      <div id="eg-saved-list"></div>
-    </div>
-  </div>
-
-  <!-- ═══ CONTENT PIPELINE ═══ -->
-  <div class="view" id="view-content">
-    <div class="page-head">
-      <div>
-        <div class="page-title">Content Pipeline</div>
-        <div class="page-sub">AI-generated posts, announcements, polls, and more</div>
+      <div class="card">
+        <h3>Upcoming Events</h3>
+        <div id="eventList"></div>
       </div>
-    </div>
-    <div id="ct-ai-warn" class="ai-warn">⚠️ Add your OpenAI API key. <a onclick="openM('mo-ai')">Add key →</a></div>
-    <div class="ct-type-grid" id="ct-type-grid"></div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="g2" style="margin-bottom:12px">
-        <div><span class="lbl">Context / topic</span><input class="inp" id="ct-context" placeholder="e.g. NFT drop Friday, 1000 WL spots..."/></div>
-        <div>
-          <span class="lbl">Tone</span>
-          <div class="tone-row" id="tone-row"></div>
+    </section>
+
+    <section id="content" class="section">
+      <div class="page-title">Content Pipeline</div>
+
+      <div class="card">
+        <select id="contentType" class="select">
+          <option>Announcement</option>
+          <option>Twitter/X Post</option>
+          <option>Discord Event</option>
+          <option>Poll</option>
+        </select>
+
+        <textarea id="contentContext" class="textarea" placeholder="Describe the content you want..."></textarea>
+
+        <button class="btn" onclick="generateContent()">Generate Template</button>
+      </div>
+
+      <div class="card">
+        <h3>Generated Content</h3>
+        <div id="generatedOutput" class="small">
+          Nothing generated yet.
         </div>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn" id="ct-gen-btn">✨ Generate</button>
-        <button class="btn btn-g" id="ct-regen-btn">⟳ Regenerate</button>
+    </section>
+
+    <section id="settings" class="section">
+      <div class="page-title">Settings</div>
+
+      <div class="card">
+        <h3>OpenAI API Key</h3>
+
+        <div class="api-box">
+          <input type="password" id="apiKey" class="input" placeholder="Paste your OpenAI API key here">
+          <button class="btn" onclick="saveApiKey()">Save API Key</button>
+
+          <p class="small" style="margin-top:12px;">
+            Your API key is stored locally in your browser only.
+            It is not embedded in the website source.
+          </p>
+        </div>
       </div>
-    </div>
-    <div id="ct-output-wrap" style="display:none">
-      <div class="ai-output">
-        <div class="ai-output-lbl">Generated content <button class="copy-btn" id="ct-copy-btn">Copy</button></div>
-        <div class="ai-output-txt" id="ct-output-txt"></div>
-      </div>
-      <div style="margin-top:10px;display:flex;gap:10px">
-        <button class="btn btn-g" id="ct-discord-btn">Discord format</button>
-        <button class="btn btn-g" id="ct-twitter-btn">Twitter/X format</button>
-        <button class="btn btn-g" id="ct-save-btn">💾 Save</button>
-      </div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="ph"><span class="pt">Saved content</span></div>
-      <div id="ct-saved-list"></div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ═══ KPI TRACKER ═══ -->
-  <div class="view" id="view-kpi">
-    <div class="page-head">
-      <div>
-        <div class="page-title">KPI Tracker</div>
-        <div class="page-sub">Community growth and engagement metrics</div>
-      </div>
-      <button class="btn" id="kpi-log-btn">+ Log this week</button>
-    </div>
-    <div class="g3" style="margin-bottom:16px" id="kpi-latest-stats"></div>
-    <div class="kpi-chart-wrap">
-      <div class="ph"><span class="pt">Growth trends</span><span style="font-size:11px;color:var(--t3)" id="kpi-chart-sub"></span></div>
-      <canvas id="kpi-chart" height="75"></canvas>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="ph"><span class="pt">AI Weekly Insights</span><button class="pa" id="kpi-ai-btn">✨ Generate</button></div>
-      <div id="kpi-ai-warn" class="ai-warn">⚠️ Add your OpenAI API key. <a onclick="openM('mo-ai')">Add key →</a></div>
-      <div id="kpi-ai-out"><div class="empty">Click Generate for AI insights on your community growth.</div></div>
-    </div>
-    <div class="card">
-      <div class="ph"><span class="pt">Weekly snapshots</span></div>
-      <div id="kpi-history"></div>
-    </div>
-  </div>
-
-  <!-- ═══ OPERATIONS NOTES ═══ -->
-  <div class="view" id="view-ops">
-    <div class="page-head">
-      <div>
-        <div class="page-title">Operations Notes</div>
-        <div class="page-sub">Ideas, partnerships, moderation, bugs — all in one place</div>
-      </div>
-      <button class="btn" id="ops-add-btn">+ Add note</button>
-    </div>
-    <div class="ops-tabs-row" id="ops-tabs-row"></div>
-    <div id="ops-list"></div>
-  </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /shell -->
-
-<!-- MODALS -->
-
+  </main>
 </div>
-
-<div class="mov" id="mo-ev">
-  <div class="modal">
-    <div class="mttl">Add event</div>
-    <span class="mlbl">Event name</span><input class="inp" id="ev-name" placeholder="e.g. Community call"/>
-    <span class="mlbl">Date</span><input class="inp" id="ev-date" type="date"/>
-    <span class="mlbl">Time</span><input class="inp" id="ev-time" type="time"/>
-    <span class="mlbl">Type</span>
-    <select class="sel" id="ev-color"><option value="#7cb87c">Work</option><option value="#c8a84b">Meeting</option><option value="#c46050">Deadline</option><option value="#6e8fc2">Personal</option><option value="#9b7fd4">Other</option></select>
-    <div class="mbtns"><button class="btn btn-g" data-close="mo-ev">Cancel</button><button class="btn" id="ev-save">Save</button></div>
-  </div>
-</div>
-
-<div class="mov" id="mo-kpi">
-  <div class="modal">
-    <div class="mttl">Log weekly KPIs</div>
-    <span class="mlbl">Total members</span><input class="inp" id="kpi-members" type="number" placeholder="e.g. 4200"/>
-    <span class="mlbl">Weekly messages</span><input class="inp" id="kpi-msgs" type="number" placeholder="e.g. 1500"/>
-    <span class="mlbl">Event participation</span><input class="inp" id="kpi-events" type="number" placeholder="e.g. 85"/>
-    <span class="mlbl">Notes (optional)</span><input class="inp" id="kpi-notes" placeholder="e.g. NFT drop week, high activity..."/>
-    <div class="mbtns"><button class="btn btn-g" data-close="mo-kpi">Cancel</button><button class="btn" id="kpi-save">Save snapshot</button></div>
-  </div>
-</div>
-
-<div class="mov" id="mo-ops">
-  <div class="modal">
-    <div class="mttl">Add ops note</div>
-    <span class="mlbl">Category</span>
-    <select class="sel" id="ops-cat">
-      <option value="ideas">💡 Ideas Backlog</option>
-      <option value="partnerships">🤝 Partnership Ideas</option>
-      <option value="moderation">🛡 Moderation Notes</option>
-      <option value="support">🎧 Support Notes</option>
-      <option value="bugs">🐛 Bug Reports</option>
-    </select>
-    <span class="mlbl">Title</span><input class="inp" id="ops-title" placeholder="Short title..."/>
-    <span class="mlbl">Details</span><textarea class="txa" id="ops-body" style="min-height:80px" placeholder="Details, links, context..."></textarea>
-    <div class="mbtns"><button class="btn btn-g" data-close="mo-ops">Cancel</button><button class="btn" id="ops-save">Save note</button></div>
-  </div>
-</div>
-
-<div class="mov" id="mo-ai">
-  <div class="modal">
-    <div class="mttl">AI Settings</div>
-    <p style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:14px">
-      Add your OpenAI API key to enable the Event Generator, Content Pipeline, and AI insights.<br><br>
-      Your key is stored <strong>locally on your device only</strong> — never sent anywhere except directly to OpenAI.<br><br>
-      Get a free key at <span style="color:var(--ac);cursor:pointer" onclick="window.open('https://platform.openai.com/api-keys','_blank')">platform.openai.com/api-keys</span>
-    </p>
-    <span class="mlbl">OpenAI API Key</span>
-    <input class="inp" id="ai-key-inp" type="password" placeholder="sk-..."/>
-    <div id="ai-key-status" style="font-size:11px;color:var(--t3);margin-top:6px"></div>
-    <div class="mbtns"><button class="btn btn-g" data-close="mo-ai">Cancel</button><button class="btn" id="ai-key-save">Save key</button></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════
-// CORE
-// ═══════════════════════════════════════
-const PAL = ['#7cb87c','#6e8fc2','#c8a84b','#c46050','#9b7fd4','#5bb8c8','#e07890','#a0b060','#d4906a','#c488cc'];
-const THEMES = [
-  {id:'forest',n:'Forest',ac:'#7cb87c',bg:'#1a1d1a'},
-  {id:'rose',n:'Rose',ac:'#d4789a',bg:'#1d1a1c'},
-  {id:'violet',n:'Violet',ac:'#9b7fd4',bg:'#1a1a22'},
-  {id:'ocean',n:'Ocean',ac:'#5bb8c8',bg:'#191e24'},
-  {id:'amber',n:'Amber',ac:'#d4a84b',bg:'#1e1c17'},
-  {id:'slate',n:'Slate',ac:'#6e8fc2',bg:'#17191e'}
-];
-const TL = {work:'Work',urgent:'Urgent',personal:'Personal',meeting:'Meeting'};
-const TAG_CLASS = {work:'tag-w',urgent:'tag-u',personal:'tag-p',meeting:'tag-m'};
+const sections = document.querySelectorAll('.section');
+const navButtons = document.querySelectorAll('.nav-btn');
 
-// Global storage (shared)
-const G = {
-  get: k => { try { return JSON.parse(localStorage.getItem('ws_g_'+k)) || [] } catch { return [] } },
-  set: (k,v) => localStorage.setItem('ws_g_'+k, JSON.stringify(v))
-};
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    navButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 
-let CU = null; // current user
-
-// Per-user storage
-const U = {
-  get: k => { try { return JSON.parse(localStorage.getItem('ws_data_'+k)) || [] } catch { return [] } },
-  set: (k,v) => localStorage.setItem('ws_data_'+k, JSON.stringify(v)),
-  str: k => localStorage.getItem('ws_data_'+k) || '',
-  ss: (k,v) => localStorage.setItem('ws_data_'+k, v)
-};
-
-const $ = id => document.getElementById(id);
-let users = [];
-
-function toast(msg) {
-  const t = $('toast'); t.textContent = msg; t.classList.add('on');
-  setTimeout(() => t.classList.remove('on'), 2400);
-}
-
-function hashPin(p) {
-  let h = 0; for (let c of p) h = (h*31 + c.charCodeAt(0)) >>> 0; return h.toString(16);
-}
-
-function openM(id) { $(id).classList.add('op'); }
-function closeM(id) { $(id).classList.remove('op'); }
-
-function goView(v) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('on', n.dataset.view === v));
-  document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === 'view-'+v));
-  if (window.innerWidth <= 768) { $('sidebar').classList.remove('mop'); $('sbov').style.display = 'none'; }
-  onViewChange(v);
-}
-window.goView = goView;
-
-function onViewChange(v) {
-  if (v === 'event-gen') { showAiWarn('eg-ai-warn'); renderEgSaved(); }
-  if (v === 'content') { showAiWarn('ct-ai-warn'); renderCtTypes(); renderTonePills(); renderCtSaved(); }
-  if (v === 'kpi') { showAiWarn('kpi-ai-warn'); renderKPI(); }
-  if (v === 'ops') { renderOpsTabs(); renderOpsNotes(); }
-  if (v === 'dashboard') { renderDashKPISnap(); showAiWarn('dash-ai-warn'); }
-}
-
-function showAiWarn(id) {
-  const el = $(id); if (!el) return;
-  el.style.display = getAiKey() ? 'none' : 'block';
-}
-
-// ═══════════════════════════════════════
-// THEMES
-// ═══════════════════════════════════════
-function applyTheme(id) {
-  document.documentElement.setAttribute('data-theme', id);
-  if (CU) U.ss('theme', id);
-  renderThemeGrid();
-}
-
-function renderThemeGrid() {
-  const g = $('theme-grid'); if (!g) return;
-  const cur = document.documentElement.getAttribute('data-theme') || 'forest';
-  g.innerHTML = '';
-  THEMES.forEach(t => {
-    const s = document.createElement('div');
-    s.className = 'th-sw' + (cur === t.id ? ' on' : '');
-    s.style.background = t.bg + '99';
-    s.innerHTML = `<div class="th-sw-dot" style="background:${t.ac}"></div><div class="th-sw-name">${t.n}</div>`;
-    s.addEventListener('click', () => applyTheme(t.id));
-    g.appendChild(s);
-  });
-}
-
-// ═══════════════════════════════════════
-// DIRECT INIT (no login)
-// ═══════════════════════════════════════
-// ═══════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════
-let tasks=[], events=[], kpiData=[], opsNotes=[], egSaved=[], ctSaved=[];
-
-function loadUserData() {
-  tasks = U.get('tasks');
-  events = U.get('events');
-  kpiData = U.get('kpi');
-  opsNotes = U.get('ops');
-  egSaved = U.get('egsaved');
-  ctSaved = U.get('ctsaved');
-}
-
-// ═══════════════════════════════════════
-// SWATCHES
-// ═══════════════════════════════════════
-function buildSwatches(id, sel, cb) {
-  const el = $(id); if (!el) return; el.innerHTML = '';
-  PAL.forEach(c => {
-    const s = document.createElement('div'); s.className = 'sw' + (sel===c?' on':'');
-    s.style.background = c;
-    s.addEventListener('click', () => { el.querySelectorAll('.sw').forEach(x=>x.classList.remove('on')); s.classList.add('on'); cb(c); });
-    el.appendChild(s);
-  });
-}
-
-// ═══════════════════════════════════════
-// MOTIVATION
-// ═══════════════════════════════════════
-const QUOTES = [
-  {q:"The secret of getting ahead is getting started.",a:"Mark Twain",i:"🚀"},
-  {q:"Small steps every day create big results.",a:"Unknown",i:"🌱"},
-  {q:"Done is better than perfect.",a:"Sheryl Sandberg",i:"✅"},
-  {q:"Focus on being productive instead of busy.",a:"Tim Ferriss",i:"🎯"},
-  {q:"The only way to do great work is to love what you do.",a:"Steve Jobs",i:"💚"},
-  {q:"Build the community you wish existed.",a:"Unknown",i:"🏗️"},
-  {q:"Engage, empower, elevate.",a:"Community OS",i:"📡"},
-  {q:"Your network is your net worth.",a:"Porter Gale",i:"🌐"},
-  {q:"Consistency is the key to achieving momentum.",a:"Darren Hardy",i:"🔑"},
-  {q:"Work hard in silence. Let success make the noise.",a:"Frank Ocean",i:"🌙"}
-];
-let qi = Math.floor(Math.random() * QUOTES.length);
-function renderMotivation() {
-  const q = QUOTES[qi];
-  $('mot-icon').textContent = q.i;
-  $('mot-q').textContent = q.q;
-  $('mot-a').textContent = '— ' + q.a;
-}
-$('mot-btn').addEventListener('click', () => { qi = (qi+1)%QUOTES.length; renderMotivation(); });
-
-// ═══════════════════════════════════════
-// AI
-// ═══════════════════════════════════════
-functifunction getAiKey() { return U.str('aikey'); }
-
-async function callAI(prompt, maxTokens = 800) {
-  const key = getAiKey();
-  if (!key) throw new Error('NO_KEY');
-  const r = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+key },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini', max_tokens: maxTokens,
-      messages: [
-        { role:'system', content:'You are a Web3 community manager assistant. Be concise, practical, and use relevant emojis.' },
-        { role:'user', content: prompt }
-      ]
-    })
-  });
-  if (!r.ok) { const e = await r.json(); throw new Error(e.error?.message || 'API error'); }
-  const d = await r.json();
-  return d.choices[0].message.content;
-}
-
-function loadingHTML() { return '<div class="ldots"><span></span><span></span><span></span></div>'; }
-
-$('ai-settings-btn').addEventListener('click', () => { $('ai-key-inp').value = getAiKey(); $('ai-key-status').textContent = getAiKey() ? '✓ API key saved' : ''; openM('mo-ai'); });
-$('ai-key-save').addEventListener('click', () => {
-  const k = $('ai-key-inp').value.trim();
-  if (!k) { toast('Enter your API key.'); return; }
-  U.ss('aikey', k);
-  closeM('mo-ai');
-  toast('API key saved!');
-  ['dash-ai-warn','eg-ai-warn','ct-ai-warn','kpi-ai-warn'].forEach(showAiWarn);
-});
-
-// Quick AI actions on dashboard
-const QUICK_PROMPTS = {
-  weekly_summary: 'Give me a concise weekly community operations summary with 3 bullet points on what to focus on this week.',
-  engagement_tip: 'Give me one specific, immediately actionable community engagement tip for a Web3/crypto community. Make it practical.',
-  event_idea: 'Suggest one fresh creative community event idea for a Web3/crypto community. Include event type, brief mechanic, and expected engagement.',
-  announcement_idea: 'Generate one creative community announcement idea for a Web3 project. Include a catchy title and 2-3 sentence description.'
-};
-async function quickAI(type) {
-  const out = $('dash-ai-out');
-  if (!getAiKey()) { out.innerHTML = '<div class="ai-warn" style="display:block">⚠️ Add your OpenAI API key first. <a onclick="openM(\'mo-ai\')">Add key →</a></div>'; return; }
-  out.innerHTML = loadingHTML();
-  try {
-    const res = await callAI(QUICK_PROMPTS[type]);
-    out.innerHTML = `<div class="ai-insight-box"><div class="ai-insight-txt">${res.replace(/\n/g,'<br>')}</div></div>`;
-  } catch(e) {
-    out.innerHTML = `<div style="color:#c46050;font-size:12px;padding:8px 0">Error: ${e.message}</div>`;
-  }
-}
-window.quickAI = quickAI;
-
-// ═══════════════════════════════════════
-// TASKS
-// ═══════════════════════════════════════
-function dlLabel(d) {
-  if (!d) return null;
-  const diff = Math.ceil((new Date(d+' 00:00:00') - new Date()) / 864e5);
-  if (diff < 0) return {t:'Overdue', c:'over'};
-  if (diff === 0) return {t:'Due today', c:'soon'};
-  if (diff === 1) return {t:'Due tomorrow', c:'soon'};
-  return {t:'Due '+d, c:'ok'};
-}
-
-function buildTaskEl(t, i) {
-  const row = document.createElement('div'); row.className = 'ti';
-  const dl = dlLabel(t.deadline);
-  const dlH = dl ? `<span class="tdl ${dl.c}">${dl.t}</span>` : '';
-  const sub = t.subtasks?.length ? `<span style="font-size:10px;color:var(--t3)">↳ ${t.subtasks.filter(s=>s.done).length}/${t.subtasks.length} sub</span>` : '';
-  row.innerHTML = `
-    <div class="tcb ${t.done?'done':''}" data-ti="${i}"></div>
-    <div class="tinfo">
-      <div class="ttxt ${t.done?'done':''}">${t.text}</div>
-      <div class="tmeta">
-        <span class="tag ${TAG_CLASS[t.tag]||'tag-w'}">${TL[t.tag]||'Work'}</span>
-        ${dlH}${sub}
-      </div>
-    </div>
-    <span class="tdel" data-tdel="${i}">×</span>`;
-  return row;
-}
-
-function renderTaskList(id, list) {
-  const el = $(id); if (!el) return;
-  const src = list || tasks;
-  if (!src.length) { el.innerHTML = '<div class="empty">No tasks yet — add one!</div>'; return; }
-  el.innerHTML = '';
-  src.forEach((t, i) => { const ri = list ? tasks.indexOf(t) : i; el.appendChild(buildTaskEl(t, ri)); });
-}
-
-function updateDashStats() {
-  const done = tasks.filter(t=>t.done).length, rem = tasks.filter(t=>!t.done).length;
-  const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
-  const ds = $('dash-stats');
-  if (ds) ds.innerHTML = `
-    <div class="sc"><div class="sl">Tasks today</div><div class="sn">${tasks.length}</div><div class="ss">${rem} remaining</div></div>
-    <div class="sc"><div class="sl">Completed</div><div class="sn sa">${done}</div><div class="ss">this week</div></div>
-    <div class="sc"><div class="sl">Events</div><div class="sn">${events.length}</div><div class="ss">scheduled</div></div>
-    <div class="sc"><div class="sl">Progress</div><div class="sn">${pct}%</div><div class="ss">${pct===100?'All done! 🎉':'Keep going!'}</div></div>`;
-}
-
-function renderAllTasks() {
-  renderTaskList('dash-task-list');
-  updateDashStats();
-}
-
-function addTask(text, tag, deadline) {
-  if (!text.trim()) return;
-  tasks.push({ text: text.trim(), tag, deadline: deadline||'', done: false, subtasks: [] });
-  U.set('tasks', tasks); renderAllTasks(); toast('Task added!');
-}
-
-function toggleTask(i) {
-  if (tasks[i]) { tasks[i].done = !tasks[i].done; U.set('tasks', tasks); renderAllTasks(); }
-}
-
-function deleteTask(i) { tasks.splice(+i, 1); U.set('tasks', tasks); renderAllTasks(); }
-function clearDone() { tasks = tasks.filter(t => !t.done); U.set('tasks', tasks); renderAllTasks(); toast('Done tasks cleared!'); }
-
-$('dash-task-list').addEventListener('click', e => {
-  const ti = e.target.dataset.ti, td = e.target.dataset.tdel;
-  if (ti !== undefined && e.target.classList.contains('tcb')) toggleTask(+ti);
-  if (td !== undefined) deleteTask(+td);
-});
-$('dash-task-add').addEventListener('click', () => {
-  addTask($('dash-task-inp').value, $('dash-task-tag').value);
-  $('dash-task-inp').value = '';
-});
-$('dash-task-inp').addEventListener('keydown', e => { if (e.key === 'Enter') $('dash-task-add').click(); });
-$('dash-clear-done').addEventListener('click', clearDone);
-
-// ═══════════════════════════════════════
-// EVENTS
-// ═══════════════════════════════════════
-function fmtTime(t) {
-  if (!t) return '';
-  const [h,m] = t.split(':'); const ap = +h>=12?'pm':'am';
-  return ((+h%12)||12)+':'+m+ap;
-}
-
-function renderDashEvs() {
-  const el = $('dash-ev-list');
-  const today = new Date().toISOString().split('T')[0];
-  const up = events.filter(ev => !ev.date || ev.date >= today).sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time)).slice(0,5);
-  if (!up.length) { el.innerHTML = '<div class="empty">No upcoming events</div>'; return; }
-  el.innerHTML = '';
-  up.forEach(ev => {
-    const gi = events.indexOf(ev);
-    const r = document.createElement('div'); r.className = 'ei';
-    r.innerHTML = `<div class="edot" style="background:${ev.color}"></div>
-      <span class="etime">${fmtTime(ev.time)}</span>
-      <span class="ename">${ev.name}${ev.date?`<span style="font-size:10px;color:var(--t3);margin-left:8px">${ev.date}</span>`:''}</span>
-      <span class="edel" data-edel="${gi}">×</span>`;
-    el.appendChild(r);
-  });
-}
-
-function renderAllEvs() { renderDashEvs(); updateDashStats(); }
-
-$('dash-ev-list').addEventListener('click', e => {
-  const d = e.target.dataset.edel;
-  if (d !== undefined) { events.splice(+d, 1); U.set('events', events); renderAllEvs(); }
-});
-$('dash-ev-add-btn').addEventListener('click', () => openM('mo-ev'));
-$('ev-save').addEventListener('click', () => {
-  const name = $('ev-name').value.trim(); if (!name) return;
-  events.push({ name, date: $('ev-date').value, time: $('ev-time').value, color: $('ev-color').value });
-  U.set('events', events); renderAllEvs(); closeM('mo-ev');
-  ['ev-name','ev-date','ev-time'].forEach(id => $(id).value = '');
-  toast('Event added!');
-});
-
-// ═══════════════════════════════════════
-// DASHBOARD KPI SNAP
-// ═══════════════════════════════════════
-function renderDashKPISnap() {
-  const el = $('dash-kpi-snap'); if (!el) return;
-  const l = kpiData.length ? kpiData[kpiData.length-1] : null;
-  const p = kpiData.length > 1 ? kpiData[kpiData.length-2] : null;
-  if (!l) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;font-size:13px;color:var(--t3);padding:12px 0">No KPI data yet — <span style="color:var(--ac);cursor:pointer" onclick="goView(\'kpi\')">log your first week →</span></div>'; return; }
-  const chg = k => { if (!p) return ''; const d = l[k]-p[k], pct = p[k] ? Math.round(d/p[k]*100) : 0; return d >= 0 ? `<div class="s-up">↑ ${pct}% vs last week</div>` : `<div class="s-dn">↓ ${Math.abs(pct)}% vs last week</div>`; };
-  el.innerHTML = `
-    <div class="sc"><div class="sl">Members</div><div class="sn sa">${l.members}</div>${chg('members')}</div>
-    <div class="sc"><div class="sl">Messages</div><div class="sn">${l.msgs}</div>${chg('msgs')}</div>
-    <div class="sc"><div class="sl">Event Participation</div><div class="sn">${l.events}</div>${chg('events')}</div>`;
-}
-
-// ═══════════════════════════════════════
-// EVENT GENERATOR
-// ═══════════════════════════════════════
-const EG_TABS = [
-  {k:'ideas',l:'Event Ideas'},{k:'mechanics',l:'Mechanics & Rules'},
-  {k:'flow',l:'Event Flow'},{k:'announcement',l:'Main Announcement'},
-  {k:'hype',l:'Hype Version'},{k:'twitter',l:'Twitter/X'},
-  {k:'host',l:'Host Script'},{k:'recap',l:'Recap Template'}
-];
-let egGenerated = {}, egActiveTab = 'ideas';
-
-function renderEgTabs() {
-  const bar = $('eg-tabs'); bar.innerHTML = '';
-  EG_TABS.forEach(t => {
-    const btn = document.createElement('button');
-    btn.className = 'eg-tab' + (egActiveTab===t.k?' on':'');
-    btn.textContent = t.l;
-    btn.disabled = !egGenerated[t.k];
-    btn.addEventListener('click', () => { if (!egGenerated[t.k]) return; egActiveTab = t.k; renderEgTabs(); renderEgOutput(); });
-    bar.appendChild(btn);
-  });
-}
-
-function renderEgOutput() {
-  const out = $('eg-output-body');
-  if (!egGenerated[egActiveTab]) { out.innerHTML = '<div class="empty">Generate an event pack first</div>'; return; }
-  const lbl = EG_TABS.find(t=>t.k===egActiveTab)?.l || egActiveTab;
-  out.innerHTML = `<div class="ai-output">
-    <div class="ai-output-lbl">${lbl} <button class="copy-btn" id="eg-copy-btn">Copy</button></div>
-    <div class="ai-output-txt" id="eg-out-txt">${egGenerated[egActiveTab].replace(/\n/g,'<br>')}</div>
-  </div>`;
-  $('eg-copy-btn').addEventListener('click', () => { navigator.clipboard.writeText(egGenerated[egActiveTab]); toast('Copied!'); });
-}
-
-async function generateEventPack() {
-  const type = $('eg-type').value, vibe = $('eg-vibe').value||'Web3/crypto community',
-    goal = $('eg-goal').value||'boost engagement', rew = $('eg-rew').value||'community prizes',
-    size = $('eg-size').value, fmt = $('eg-fmt').value, dur = $('eg-dur').value,
-    spon = $('eg-spon').value;
-
-  const prompt = `You are a Web3 community manager. Generate a complete event pack.
-
-Event: ${type} | Vibe: ${vibe} | Goal: ${goal} | Rewards: ${rew}
-Size: ${size} | Format: ${fmt} | Duration: ${dur}${spon?` | Sponsor: ${spon}`:''}
-
-Provide ALL sections exactly labeled like this:
-
-[EVENT IDEAS]
-3 creative event name ideas with 1-line descriptions
-
-[MECHANICS & RULES]
-Step-by-step mechanics and rules
-
-[EVENT FLOW]
-Timeline/flow from start to finish
-
-[MAIN ANNOUNCEMENT]
-Ready-to-post Discord announcement with formatting
-
-[HYPE VERSION]
-2-3 line punchy teaser
-
-[TWITTER/X VERSION]
-Under 280 characters, engaging
-
-[HOST SCRIPT]
-Host talking points and script
-
-[RECAP TEMPLATE]
-Post-event recap template with placeholders`;
-
-  $('eg-output-section').style.display = 'none';
-  const btn = $('eg-gen-btn'); btn.textContent = '⏳ Generating...'; btn.disabled = true;
-
-  try {
-    const res = await callAI(prompt, 1400);
-    const SM = {'EVENT IDEAS':'ideas','MECHANICS & RULES':'mechanics','EVENT FLOW':'flow','MAIN ANNOUNCEMENT':'announcement','HYPE VERSION':'hype','TWITTER/X VERSION':'twitter','HOST SCRIPT':'host','RECAP TEMPLATE':'recap'};
-    egGenerated = {}; let cur = '';
-    res.split('\n').forEach(ln => {
-      const m = ln.match(/\[(.+?)\]/);
-      if (m && SM[m[1]]) cur = SM[m[1]];
-      else if (cur) egGenerated[cur] = (egGenerated[cur]||'') + (egGenerated[cur]?'\n':'') + ln;
+    sections.forEach(section => {
+      section.classList.remove('active');
     });
-    egActiveTab = 'ideas';
-    renderEgTabs();
-    $('eg-output-section').style.display = 'block';
-    renderEgOutput();
-    toast('Event pack generated!');
-  } catch(e) {
-    if (e.message === 'NO_KEY') { showAiWarn('eg-ai-warn'); toast('Add your API key first.'); }
-    else toast('Error: ' + e.message);
-  } finally {
-    btn.textContent = '✨ Generate Event Pack'; btn.disabled = false;
+
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+
+function setTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('workspace_theme', theme);
+}
+
+const savedTheme = localStorage.getItem('workspace_theme');
+if(savedTheme){
+  setTheme(savedTheme);
+}
+
+let tasks = JSON.parse(localStorage.getItem('workspace_tasks') || '[]');
+let events = JSON.parse(localStorage.getItem('workspace_events') || '[]');
+
+function saveData(){
+  localStorage.setItem('workspace_tasks', JSON.stringify(tasks));
+  localStorage.setItem('workspace_events', JSON.stringify(events));
+  renderDashboard();
+}
+
+function addTask(){
+  const input = document.getElementById('taskInput');
+
+  if(!input.value.trim()) return;
+
+  tasks.push({
+    text: input.value,
+    done:false
+  });
+
+  input.value = '';
+
+  saveData();
+  renderTasks();
+}
+
+function toggleTask(index){
+  tasks[index].done = !tasks[index].done;
+  saveData();
+  renderTasks();
+}
+
+function deleteTask(index){
+  tasks.splice(index,1);
+  saveData();
+  renderTasks();
+}
+
+function renderTasks(){
+  const list = document.getElementById('taskList');
+
+  if(tasks.length === 0){
+    list.innerHTML = '<p class="small">No tasks yet.</p>';
+    return;
   }
-}
 
-$('eg-gen-btn').addEventListener('click', generateEventPack);
-$('eg-regen-btn').addEventListener('click', generateEventPack);
-$('eg-save-btn').addEventListener('click', () => {
-  if (!egGenerated.ideas) { toast('Generate a pack first.'); return; }
-  egSaved.push({ id:'eg'+Date.now(), type:$('eg-type').value, vibe:$('eg-vibe').value, date:new Date().toLocaleDateString(), data:egGenerated });
-  U.set('egsaved', egSaved); renderEgSaved(); toast('Pack saved!');
-});
-
-function renderEgSaved() {
-  const list = $('eg-saved-list');
-  if (!egSaved.length) { list.innerHTML = '<div class="empty">No saved event packs yet</div>'; return; }
   list.innerHTML = '';
-  [...egSaved].reverse().forEach((s, i) => {
-    const ri = egSaved.length-1-i;
-    const d = document.createElement('div'); d.className = 'eg-saved-item';
-    d.innerHTML = `<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--t1)">${s.type}${s.vibe?' · '+s.vibe:''}</div><div style="font-size:10px;color:var(--t3);margin-top:2px">${s.date}</div></div>
-      <button class="btn btn-g" style="padding:5px 12px;font-size:11px" data-load="${ri}">Load</button>
-      <span style="font-size:14px;color:var(--t3);cursor:pointer;padding:0 4px" data-egdel="${ri}">×</span>`;
-    list.appendChild(d);
-  });
-  list.addEventListener('click', e => {
-    const l = e.target.dataset.load, d = e.target.dataset.egdel;
-    if (l !== undefined) { egGenerated = egSaved[+l].data; egActiveTab='ideas'; renderEgTabs(); $('eg-output-section').style.display='block'; renderEgOutput(); toast('Pack loaded!'); }
-    if (d !== undefined) { egSaved.splice(+d,1); U.set('egsaved',egSaved); renderEgSaved(); }
-  });
-}
 
-// ═══════════════════════════════════════
-// CONTENT PIPELINE
-// ═══════════════════════════════════════
-const CT_TYPES = [
-  {k:'announcement',l:'Announcement',i:'📣'},
-  {k:'engagement',l:'Engagement Q',i:'💬'},
-  {k:'poll',l:'Poll',i:'📊'},
-  {k:'recap',l:'Recap',i:'📝'},
-  {k:'ama',l:'AMA Qs',i:'🎤'},
-  {k:'meme',l:'Meme Ideas',i:'😂'},
-  {k:'hype',l:'Hype Post',i:'🔥'},
-  {k:'reminder',l:'Reminder',i:'⏰'}
-];
-const TONES = ['Professional','Hype','Casual','Witty','Urgent','Community-first'];
-let ctType = 'announcement', ctTone = 'Professional';
+  tasks.forEach((task,index)=>{
+    const div = document.createElement('div');
+    div.className = 'task ' + (task.done ? 'done':'');
 
-function renderCtTypes() {
-  const g = $('ct-type-grid'); g.innerHTML = '';
-  CT_TYPES.forEach(t => {
-    const c = document.createElement('div'); c.className = 'ct-type-card' + (ctType===t.k?' on':'');
-    c.innerHTML = `<span class="ct-icon">${t.i}</span><div class="ct-name">${t.l}</div>`;
-    c.addEventListener('click', () => { ctType = t.k; renderCtTypes(); });
-    g.appendChild(c);
+    div.innerHTML = `
+      <span>${task.text}</span>
+
+      <div class="row">
+        <button class="btn" onclick="toggleTask(${index})">
+          ${task.done ? 'Undo':'Done'}
+        </button>
+
+        <button class="btn" onclick="deleteTask(${index})">
+          Delete
+        </button>
+      </div>
+    `;
+
+    list.appendChild(div);
   });
 }
 
-function renderTonePills() {
-  const p = $('tone-row'); p.innerHTML = '';
-  TONES.forEach(t => {
-    const b = document.createElement('button'); b.className = 'tone-btn' + (ctTone===t?' on':'');
-    b.textContent = t;
-    b.addEventListener('click', () => { ctTone = t; renderTonePills(); });
-    p.appendChild(b);
+function addEvent(){
+  const name = document.getElementById('eventName');
+  const date = document.getElementById('eventDate');
+
+  if(!name.value.trim()) return;
+
+  events.push({
+    name:name.value,
+    date:date.value
+  });
+
+  name.value = '';
+  date.value = '';
+
+  saveData();
+  renderEvents();
+}
+
+function renderEvents(){
+  const list = document.getElementById('eventList');
+
+  if(events.length === 0){
+    list.innerHTML = '<p class="small">No events yet.</p>';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  events.forEach(event=>{
+    const div = document.createElement('div');
+
+    div.className = 'task';
+
+    div.innerHTML = `
+      <span>
+        <strong>${event.name}</strong><br>
+        <small>${event.date || 'No date set'}</small>
+      </span>
+    `;
+
+    list.appendChild(div);
   });
 }
 
-async function generateContent() {
-  const ctx = $('ct-context').value;
-  const prompt = `Generate a ${ctType} for a Web3/crypto community.
-Tone: ${ctTone}${ctx?'\nContext: '+ctx:''}
-Make it ready to post, engaging, with relevant emojis. Keep it natural and community-focused.`;
-
-  $('ct-output-wrap').style.display = 'none';
-  const btn = $('ct-gen-btn'); btn.textContent = '⏳ Generating...'; btn.disabled = true;
-  try {
-    const res = await callAI(prompt, 400);
-    $('ct-output-txt').textContent = res;
-    $('ct-output-wrap').style.display = 'block';
-  } catch(e) {
-    if (e.message === 'NO_KEY') { showAiWarn('ct-ai-warn'); toast('Add your API key first.'); }
-    else toast('Error: ' + e.message);
-  } finally { btn.textContent = '✨ Generate'; btn.disabled = false; }
+function renderDashboard(){
+  document.getElementById('taskCount').textContent = tasks.length;
+  document.getElementById('eventCount').textContent = events.length;
 }
 
-$('ct-gen-btn').addEventListener('click', generateContent);
-$('ct-regen-btn').addEventListener('click', generateContent);
-$('ct-copy-btn').addEventListener('click', () => { navigator.clipboard.writeText($('ct-output-txt').textContent); toast('Copied!'); });
+function saveApiKey(){
+  const key = document.getElementById('apiKey').value;
 
-$('ct-discord-btn').addEventListener('click', () => {
-  const txt = $('ct-output-txt').textContent;
-  if (!txt) return;
-  $('ct-output-txt').textContent = txt + '\n\n━━━━━━━━━━━━━━━━';
-  toast('Discord format applied!');
-});
+  localStorage.setItem('workspace_api_key', key);
 
-$('ct-twitter-btn').addEventListener('click', () => {
-  const txt = $('ct-output-txt').textContent;
-  if (!txt) return;
-  const tw = txt.slice(0, 270) + (txt.length > 270 ? '...' : '');
-  $('ct-output-txt').textContent = tw;
-  toast('Twitter format applied!');
-});
+  alert('API key saved locally.');
+}
 
-$('ct-save-btn').addEventListener('click', () => {
-  const txt = $('ct-output-txt').textContent;
-  if (!txt) { toast('Generate content first.'); return; }
-  ctSaved.push({ type: ctType, tone: ctTone, text: txt, date: new Date().toLocaleDateString() });
-  U.set('ctsaved', ctSaved); renderCtSaved(); toast('Saved to pipeline!');
-});
+function generateContent(){
+  const type = document.getElementById('contentType').value;
+  const context = document.getElementById('contentContext').value;
 
-function renderCtSaved() {
-  const list = $('ct-sav
+  const output = `
+${type}
+
+Topic:
+${context}
+
+Suggested Hook:
+🔥 Big things are coming.
+
+CTA:
+Join the community and stay tuned.
+
+Hashtags:
+#Web3 #Community
+  `;
+
+  document.getElementById('generatedOutput').innerText = output;
+}
+
+renderTasks();
+renderEvents();
+renderDashboard();
+</script>
+
+</body>
+</html>
