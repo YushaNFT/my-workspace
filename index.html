@@ -1,520 +1,1197 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="forest">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>My Workspace</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Manager OS</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#111827;
-  --panel:#1f2937;
-  --card:#374151;
-  --text:#f3f4f6;
-  --muted:#9ca3af;
-  --accent:#10b981;
-  --border:#4b5563;
+  --bg:#181d19;--panel:#202720;--card:#273028;--input:#151a16;
+  --border:rgba(255,255,255,.09);--soft:rgba(255,255,255,.05);
+  --text:#edf3ed;--muted:#aebaae;--faint:#738174;
+  --accent:#78b67b;--accent-dark:#3d6b40;--warn:#d6ab4f;--danger:#d86d5d;--blue:#76a9d6;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-
-[data-theme="ocean"]{
-  --bg:#0f172a;
-  --panel:#1e293b;
-  --card:#334155;
-  --accent:#38bdf8;
-}
-
-[data-theme="violet"]{
-  --bg:#1e1b4b;
-  --panel:#312e81;
-  --card:#4338ca;
-  --accent:#a78bfa;
-}
-
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-}
-
-.app{
-  display:flex;
-  min-height:100vh;
-}
-
-.sidebar{
-  width:250px;
-  background:var(--panel);
-  border-right:1px solid var(--border);
-  padding:20px;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:700;
-  margin-bottom:30px;
-}
-
-.nav-btn{
-  width:100%;
-  border:none;
-  background:none;
-  color:var(--muted);
-  text-align:left;
-  padding:12px;
-  border-radius:10px;
-  cursor:pointer;
-  margin-bottom:8px;
-  transition:.2s;
-  font-size:15px;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:var(--card);
-  color:var(--text);
-}
-
-.main{
-  flex:1;
-  padding:25px;
-}
-
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
-
-.page-title{
-  font-size:32px;
-  font-weight:700;
-  margin-bottom:20px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
-  margin-bottom:20px;
-}
-
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-}
-
-.card h3{
-  margin-bottom:10px;
-}
-
-.stat{
-  font-size:40px;
-  font-weight:700;
-  color:var(--accent);
-}
-
-.input,
-.select,
-.textarea{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:white;
-  margin-bottom:12px;
-}
-
-.textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-.btn{
-  border:none;
-  background:var(--accent);
-  color:white;
-  padding:12px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.btn:hover{
-  opacity:.9;
-}
-
-.task{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:var(--card);
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
-}
-
-.task.done span{
-  text-decoration:line-through;
-  opacity:.6;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.api-box{
-  background:#111827;
-  border:1px dashed var(--border);
-  padding:16px;
-  border-radius:12px;
-  margin-top:10px;
-}
-
-.small{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.6;
-}
-
-.theme-grid{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-}
-
-.theme-btn{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  border:none;
-  cursor:pointer;
-}
-
-@media(max-width:768px){
-  .app{
-    flex-direction:column;
-  }
-
-  .sidebar{
-    width:100%;
-  }
-}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-size:14px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:232px;background:var(--panel);border-right:1px solid var(--border);padding:0;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column}
+.brand{padding:24px 16px 20px;border-bottom:1px solid var(--border)}
+.brand h1{font-size:18px;line-height:1.2}.brand p{font-size:12px;color:var(--faint);margin-top:5px}
+.nav{padding-top:10px;flex:1}.nav-section{padding:16px 0 7px 16px;font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em;font-weight:700}.nav button{width:100%;background:none;border:0;color:var(--muted);text-align:left;padding:10px 16px;border-left:3px solid transparent;font-size:13px}
+.nav button:hover,.nav button.active{background:rgba(120,182,123,.1);color:var(--text);border-left-color:var(--accent)}
+.nav-ico{display:inline-block;width:20px;color:var(--faint)}.side-footer{border-top:1px solid var(--border);padding:14px 16px;color:var(--faint);font-size:12px;display:flex;align-items:center;gap:9px}.side-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent-dark);display:grid;place-items:center;color:var(--text);font-weight:800}
+.main{margin-left:232px;width:calc(100% - 232px);padding:28px 36px 50px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.top h2{font-size:28px;font-weight:500;font-family:Georgia,"Times New Roman",serif}.top span{font-size:12px;color:var(--faint)}
+.view{display:none}.view.active{display:block}
+.grid{display:grid;gap:14px}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}.grid.four{grid-template-columns:repeat(4,1fr)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.panel-title{font-weight:700}.hint{color:var(--faint);font-size:12px;line-height:1.5}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.stat small{display:block;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.stat strong{font-size:34px;display:block;font-family:Georgia,"Times New Roman",serif;font-weight:400}.stat span{font-size:12px;color:var(--faint)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.input,.select,.textarea{background:var(--input);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:10px 12px;outline:none;min-width:0}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--accent-dark)}.input{flex:1}.textarea{width:100%;min-height:110px;resize:vertical}
+.btn{border:0;border-radius:8px;background:var(--accent-dark);color:var(--text);font-weight:700;padding:10px 14px}
+.btn:hover{background:var(--accent);color:var(--bg)}.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}.btn.danger{background:rgba(216,109,93,.15);border:1px solid rgba(216,109,93,.35);color:#ef9386}
+.list{display:grid;gap:8px}.empty{color:var(--faint);font-size:13px;text-align:center;padding:18px 0}
+.task,.link-item,.note{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--soft);border-radius:10px;padding:12px}
+.task-main,.link-main,.note-main{flex:1;min-width:0}.task-title.done{text-decoration:line-through;color:var(--faint)}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;color:var(--faint);font-size:11px}.pill{border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700}
+.pill.todo{background:rgba(118,169,214,.14);color:#9ac4e8}.pill.doing{background:rgba(214,171,79,.14);color:#e5c46f}.pill.done{background:rgba(120,182,123,.14);color:#99d19c}.pill.high{background:rgba(216,109,93,.16);color:#ef9386}
+.check{width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,.25);background:transparent;margin-top:2px;flex:none}.check.done{background:var(--accent-dark);border-color:var(--accent-dark)}
+.icon-btn{background:none;border:0;color:var(--faint);font-weight:800;padding:2px 5px}.icon-btn:hover{color:var(--danger)}
+.progress{height:7px;background:var(--card);border-radius:20px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:var(--accent)}
+.quote-panel{display:flex;align-items:center;gap:18px;margin:16px 0}.quote-icon{font-size:23px;color:var(--warn);width:26px;text-align:center}.quote-text{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:700}.quote-author{color:var(--faint);font-size:12px;margin-top:5px}.dashboard-links-panel{margin-top:14px}.weekly-panel{margin-top:14px}.dashboard-main-row{margin-top:14px}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel)}.cal-h{padding:10px;text-align:center;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}.cal-day{min-height:92px;padding:9px;border-right:1px solid var(--soft);border-bottom:1px solid var(--soft)}.cal-day:nth-child(7n){border-right:0}.cal-num{font-size:12px;color:var(--muted);margin-bottom:6px}.cal-day.today .cal-num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-dark);color:var(--text)}.cal-chip{display:block;font-size:10px;border-radius:5px;padding:2px 5px;margin-bottom:3px;background:rgba(120,182,123,.12);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cal-placeholder{margin-top:14px;border:1px dashed var(--border);border-radius:12px;padding:14px;color:var(--faint);font-size:13px}
+.link-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.link-card{background:var(--card);border:1px solid var(--soft);border-radius:10px;padding:14px;min-height:86px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center}
+.link-card:hover{border-color:var(--accent-dark)}.link-card a{color:var(--text);font-weight:700;text-decoration:none;display:block}.link-card small{display:block;color:var(--faint);margin-top:6px;font-size:11px}.add-link-card{border:1.5px dashed var(--soft);background:transparent;color:var(--faint)}
+.project-block{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}.project-block:last-child{margin-bottom:0}.project-name{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;color:var(--muted);font-weight:700}.project-left{display:flex;align-items:center;gap:9px}.project-dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}.project-count{font-size:11px;color:var(--faint);background:var(--card);border-radius:999px;padding:2px 8px}.tiny-link{background:none;border:0;color:var(--accent);font-weight:700;font-size:12px}.color-row{display:flex;gap:8px;flex-wrap:wrap}.color-choice{width:26px;height:26px;border-radius:50%;border:2px solid transparent}.color-choice.active{border-color:var(--text)}
+.modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);align-items:center;justify-content:center;z-index:20;padding:20px}
+.modal-wrap.open{display:flex}.modal{width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}.modal h3{margin-bottom:14px}.modal label{display:block;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:12px 0 5px}.modal .input,.modal .select,.modal .textarea{width:100%}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.drawer-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:18;justify-content:flex-end}.drawer-wrap.open{display:flex}.drawer{width:min(380px,100%);height:100%;background:var(--panel);border-left:1px solid var(--border);padding:20px;overflow:auto}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.drawer h3{font-size:21px}.drawer label{display:block;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:14px 0 6px}.subtask{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--soft);border-radius:8px;padding:8px;margin-bottom:7px}.subtask span{flex:1}.trend{font-weight:800}.trend.up{color:var(--accent)}.trend.down{color:var(--danger)}.trend.flat{color:var(--faint)}
+.toast{position:fixed;right:22px;bottom:22px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;opacity:0;transform:translateY(8px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.sidebar{position:static;width:100%;height:auto}.app{display:block}.main{margin-left:0;width:100%;padding:18px}.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}.link-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.link-grid{grid-template-columns:1fr}.top{display:block}.top span{display:block;margin-top:5px}}
 </style>
 </head>
 <body>
-
 <div class="app">
-
   <aside class="sidebar">
-    <div class="logo">My Workspace</div>
-
-    <button class="nav-btn active" data-target="dashboard">Dashboard</button>
-    <button class="nav-btn" data-target="tasks">Tasks</button>
-    <button class="nav-btn" data-target="events">Events</button>
-    <button class="nav-btn" data-target="content">Content Pipeline</button>
-    <button class="nav-btn" data-target="settings">Settings</button>
-
-    <div class="theme-grid">
-      <button class="theme-btn" style="background:#10b981" onclick="setTheme('forest')"></button>
-      <button class="theme-btn" style="background:#38bdf8" onclick="setTheme('ocean')"></button>
-      <button class="theme-btn" style="background:#a78bfa" onclick="setTheme('violet')"></button>
+    <div class="brand">
+      <h1>My Workspace</h1>
+      <p>personal dashboard +</p>
     </div>
+    <div class="nav">
+      <div class="nav-section">Main</div>
+      <button class="active" data-view="dashboard"><span class="nav-ico">▦</span>Dashboard</button>
+      <button data-view="tasks"><span class="nav-ico">≡</span>Tasks</button>
+      <button data-view="calendar"><span class="nav-ico">□</span>Calendar</button>
+      <button data-view="links"><span class="nav-ico">◎</span>Quick Links</button>
+      <button data-view="projectsView"><span class="nav-ico">▥</span>Projects</button>
+      <div class="nav-section">Community Ops</div>
+      <button data-view="kpi"><span class="nav-ico">↗</span>KPI Tracking</button>
+      <button data-view="notes"><span class="nav-ico">☰</span>Ops Notes</button>
+      <button data-view="eventgen"><span class="nav-ico">✦</span>Event Generator</button>
+      <div class="nav-section">Personal</div>
+      <button data-view="resources"><span class="nav-ico">▤</span>Resources</button>
+      <button data-view="journey"><span class="nav-ico">⌁</span>Journey</button>
+    </div>
+    <div class="side-footer"><div class="side-avatar">ME</div><span>My Workspace</span></div>
   </aside>
 
   <main class="main">
+    <div class="top">
+      <h2 id="page-title">Dashboard</h2>
+      <span id="today"></span>
+    </div>
 
-    <section id="dashboard" class="section active">
-      <div class="page-title">Dashboard</div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Total Tasks</h3>
-          <div class="stat" id="taskCount">0</div>
+    <section class="view active" id="dashboard">
+      <div class="grid four" id="stats"></div>
+      <div class="panel quote-panel">
+        <div class="quote-icon">⚡</div>
+        <div style="flex:1">
+          <div class="quote-text">You don't have to be great to start, but you have to start to be great.</div>
+          <div class="quote-author">— Zig Ziglar</div>
+        </div>
+        <button class="btn ghost" type="button">New quote</button>
+      </div>
+      <div class="grid two dashboard-main-row">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Today's tasks</div>
+            </div>
+            <button class="tiny-link" id="clear-completed-dashboard">Clear done</button>
+          </div>
+          <div class="row">
+            <input class="input" id="dash-task-title" placeholder="Add a task">
+            <select class="select" id="dash-task-priority">
+              <option value="normal">Normal</option>
+              <option value="high">High</option>
+            </select>
+            <select class="select" id="dash-task-project"></select>
+            <button class="btn" id="dash-task-add">Add</button>
+          </div>
+          <div class="list" id="dash-task-list" style="margin-top:12px"></div>
         </div>
 
-        <div class="card">
-          <h3>Upcoming Events</h3>
-          <div class="stat" id="eventCount">0</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Upcoming events</div>
+            </div>
+            <button class="tiny-link" data-go="calendar">+ Add</button>
+          </div>
+          <div class="list" id="dashboard-event-list"></div>
         </div>
       </div>
-
-      <div class="card">
-        <h3>Motivation</h3>
-        <p id="quoteText">Build consistently. Momentum compounds.</p>
+      <div class="dashboard-links-panel">
+        <div class="panel-head" style="margin-bottom:8px">
+          <div class="row">
+            <span class="panel-title">Quick Links</span>
+            <select class="select" id="dashboard-project-select"></select>
+          </div>
+          <button class="tiny-link" data-go="links">Manage</button>
+        </div>
+        <div id="dashboard-links"></div>
+      </div>
+      <div class="panel weekly-panel">
+        <div class="panel-head">
+          <div class="panel-title">Weekly progress</div>
+          <div class="hint" id="task-progress-label"></div>
+        </div>
+        <div class="progress"><div class="bar" id="task-progress"></div></div>
       </div>
     </section>
 
-    <section id="tasks" class="section">
-      <div class="page-title">Tasks</div>
-
-      <div class="card">
-        <input id="taskInput" class="input" placeholder="Add a task..."/>
-        <button class="btn" onclick="addTask()">Add Task</button>
+    <section class="view" id="tasks">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">All Tasks</div>
+            <div class="hint">Simple task management with status, due date, and priority.</div>
+          </div>
+          <button class="btn ghost" id="clear-completed-tasks">Clear done</button>
+        </div>
+        <div class="row">
+          <input class="input" id="task-title" placeholder="Task name">
+          <select class="select" id="task-priority">
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+          </select>
+          <select class="select" id="task-status">
+            <option value="todo">To do</option>
+            <option value="doing">Doing</option>
+            <option value="done">Done</option>
+          </select>
+          <select class="select" id="task-project"></select>
+          <input class="select" type="date" id="task-due">
+          <button class="btn" id="task-add">Add task</button>
+        </div>
       </div>
-
-      <div class="card">
-        <h3>Task List</h3>
-        <div id="taskList"></div>
+      <div class="panel" style="margin-top:14px">
+        <div class="row">
+          <span class="hint">Filter tasks by project</span>
+          <select class="select" id="task-project-filter"></select>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <div class="list" id="task-list"></div>
       </div>
     </section>
 
-    <section id="events" class="section">
-      <div class="page-title">Events</div>
-
-      <div class="card">
-        <input id="eventName" class="input" placeholder="Event name"/>
-        <input id="eventDate" type="date" class="input"/>
-        <button class="btn" onclick="addEvent()">Add Event</button>
+    <section class="view" id="calendar">
+      <div class="panel">
+        <div class="calendar-head">
+          <button class="btn ghost" id="calendar-prev">Prev</button>
+          <div>
+            <div class="panel-title" id="calendar-title">Calendar</div>
+            <div class="hint">Simple event tracker now, Google Calendar sync later.</div>
+          </div>
+          <button class="btn ghost" id="calendar-next">Next</button>
+        </div>
+        <div class="row">
+          <input class="input" id="event-title" placeholder="Event name">
+          <input class="select" type="date" id="event-date">
+          <input class="select" type="time" id="event-time">
+          <button class="btn" id="event-add">Add event</button>
+        </div>
       </div>
+      <div class="panel" style="margin-top:14px"><div class="calendar-grid" id="calendar-grid"></div><div class="cal-placeholder">Google Calendar sync placeholder: later we can connect this area to show imported Google Calendar events beside your manually added community events.</div></div>
+      <div class="panel" style="margin-top:14px"><div class="list" id="event-list"></div></div>
+    </section>
 
-      <div class="card">
-        <h3>Upcoming Events</h3>
-        <div id="eventList"></div>
+    <section class="view" id="links">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Quick Links</div>
+            <div class="hint">Projects are groups. Add links into each project, then choose a project for the dashboard.</div>
+          </div>
+          <div class="row">
+            <button class="btn ghost" id="open-project-modal">New Project</button>
+            <button class="btn" id="open-link-modal">Add Link</button>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <select class="select" id="links-filter"></select>
+        </div>
+        <div id="project-link-list"></div>
       </div>
     </section>
 
-    <section id="content" class="section">
-      <div class="page-title">Content Pipeline</div>
-
-      <div class="card">
-        <select id="contentType" class="select">
-          <option>Announcement</option>
-          <option>Twitter/X Post</option>
-          <option>Discord Event</option>
-          <option>Poll</option>
-        </select>
-
-        <textarea id="contentContext" class="textarea" placeholder="Describe the content you want..."></textarea>
-
-        <button class="btn" onclick="generateContent()">Generate Template</button>
+    <section class="view" id="projectsView">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Projects</div>
+            <div class="hint">Projects power both task filtering and quick-link groups.</div>
+          </div>
+          <button class="btn" id="open-project-modal-2">New Project</button>
+        </div>
+        <div class="list" id="project-list"></div>
       </div>
+    </section>
 
-      <div class="card">
-        <h3>Generated Content</h3>
-        <div id="generatedOutput" class="small">
-          Nothing generated yet.
+    <section class="view" id="eventgen">
+      <div class="grid two">
+        <div class="panel">
+          <div class="panel-title">Event Generator</div>
+          <div class="hint" style="margin:4px 0 14px">A simple local draft generator. We can make this smarter next.</div>
+          <div class="grid">
+            <input class="input" id="event-name" placeholder="Event name, e.g. Meme Night">
+            <input class="input" id="event-goal" placeholder="Goal, e.g. increase Discord activity">
+            <input class="input" id="event-reward" placeholder="Reward, e.g. points, WL, merch">
+            <select class="select" id="event-format">
+              <option>Discord</option>
+              <option>Twitter/X</option>
+              <option>Telegram</option>
+              <option>Hybrid</option>
+            </select>
+            <button class="btn" id="generate-event">Generate Draft</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title">Generated Draft</div>
+            <button class="btn ghost" id="copy-event">Copy</button>
+          </div>
+          <textarea class="textarea" id="event-output" placeholder="Your event draft will appear here."></textarea>
         </div>
       </div>
     </section>
 
-    <section id="settings" class="section">
-      <div class="page-title">Settings</div>
-
-      <div class="card">
-        <h3>OpenAI API Key</h3>
-
-        <div class="api-box">
-          <input type="password" id="apiKey" class="input" placeholder="Paste your OpenAI API key here">
-          <button class="btn" onclick="saveApiKey()">Save API Key</button>
-
-          <p class="small" style="margin-top:12px;">
-            Your API key is stored locally in your browser only.
-            It is not embedded in the website source.
-          </p>
+    <section class="view" id="kpi">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">KPI Tracking</div>
+            <div class="hint">Track weekly community numbers.</div>
+          </div>
         </div>
+        <div class="row">
+          <select class="select" id="kpi-project"></select>
+          <input class="input" type="number" id="kpi-members" placeholder="Members">
+          <input class="input" type="number" id="kpi-messages" placeholder="Messages">
+          <input class="input" type="number" id="kpi-participants" placeholder="Event participants">
+          <button class="btn" id="kpi-add">Log KPI</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Highlighted KPI</div>
+            <div class="hint">Select a project to view its trend.</div>
+          </div>
+          <select class="select" id="kpi-highlight-project"></select>
+        </div>
+        <div class="grid three" id="kpi-highlight"></div>
+      </div>
+      <div class="panel" style="margin-top:14px"><div class="list" id="kpi-list"></div></div>
+    </section>
+
+    <section class="view" id="notes">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Ops Notes</div>
+            <div class="hint">Quick backlog for ideas, moderation notes, support issues, and reminders.</div>
+          </div>
+        </div>
+        <div class="row">
+          <input class="input" id="note-title" placeholder="Note title">
+          <select class="select" id="note-category">
+            <option>Idea</option>
+            <option>Moderation</option>
+            <option>Support</option>
+            <option>Partner</option>
+            <option>Reminder</option>
+          </select>
+          <button class="btn" id="note-add">Add note</button>
+        </div>
+        <textarea class="textarea" id="note-body" style="margin-top:8px" placeholder="Details"></textarea>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <div class="list" id="note-list"></div>
       </div>
     </section>
 
+    <section class="view" id="resources">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Resources</div>
+            <div class="hint">Save templates, docs, and references.</div>
+          </div>
+        </div>
+        <div class="row">
+          <input class="input" id="resource-title" placeholder="Resource title">
+          <input class="input" id="resource-url" placeholder="URL">
+          <button class="btn" id="resource-add">Add resource</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px"><div class="link-grid" id="resource-list"></div></div>
+    </section>
+
+    <section class="view" id="journey">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Journey</div>
+            <div class="hint">Track personal growth milestones.</div>
+          </div>
+        </div>
+        <div class="row">
+          <input class="input" id="milestone-title" placeholder="Milestone">
+          <button class="btn" id="milestone-add">Add milestone</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px"><div class="list" id="milestone-list"></div></div>
+    </section>
   </main>
 </div>
 
-<script>
-const sections = document.querySelectorAll('.section');
-const navButtons = document.querySelectorAll('.nav-btn');
+<div class="modal-wrap" id="project-modal">
+  <div class="modal">
+    <h3 id="project-modal-title">New Project</h3>
+    <label>Project name</label>
+    <input class="input" id="project-name" placeholder="e.g. Client A, Launch Campaign">
+    <label>Color</label>
+    <div class="color-row" id="project-colors"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close-modal>Cancel</button>
+      <button class="btn" id="project-save">Save Project</button>
+    </div>
+  </div>
+</div>
 
-navButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    navButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+<div class="modal-wrap" id="link-modal">
+  <div class="modal">
+    <h3>Add Link</h3>
+    <label>Project</label>
+    <select class="select" id="link-project"></select>
+    <label>Button name</label>
+    <input class="input" id="link-name" placeholder="e.g. Discord Admin">
+    <label>URL</label>
+    <input class="input" id="link-url" placeholder="https://">
+    <div class="modal-actions">
+      <button class="btn ghost" data-close-modal>Cancel</button>
+      <button class="btn" id="link-save">Save Link</button>
+    </div>
+  </div>
+</div>
 
-    sections.forEach(section => {
-      section.classList.remove('active');
-    });
-
-    document.getElementById(btn.dataset.target).classList.add('active');
-  });
-});
-
-function setTheme(theme){
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('workspace_theme', theme);
-}
-
-const savedTheme = localStorage.getItem('workspace_theme');
-if(savedTheme){
-  setTheme(savedTheme);
-}
-
-let tasks = JSON.parse(localStorage.getItem('workspace_tasks') || '[]');
-let events = JSON.parse(localStorage.getItem('workspace_events') || '[]');
-
-function saveData(){
-  localStorage.setItem('workspace_tasks', JSON.stringify(tasks));
-  localStorage.setItem('workspace_events', JSON.stringify(events));
-  renderDashboard();
-}
-
-function addTask(){
-  const input = document.getElementById('taskInput');
-
-  if(!input.value.trim()) return;
-
-  tasks.push({
-    text: input.value,
-    done:false
-  });
-
-  input.value = '';
-
-  saveData();
-  renderTasks();
-}
-
-function toggleTask(index){
-  tasks[index].done = !tasks[index].done;
-  saveData();
-  renderTasks();
-}
-
-function deleteTask(index){
-  tasks.splice(index,1);
-  saveData();
-  renderTasks();
-}
-
-function renderTasks(){
-  const list = document.getElementById('taskList');
-
-  if(tasks.length === 0){
-    list.innerHTML = '<p class="small">No tasks yet.</p>';
-    return;
-  }
-
-  list.innerHTML = '';
-
-  tasks.forEach((task,index)=>{
-    const div = document.createElement('div');
-    div.className = 'task ' + (task.done ? 'done':'');
-
-    div.innerHTML = `
-      <span>${task.text}</span>
-
-      <div class="row">
-        <button class="btn" onclick="toggleTask(${index})">
-          ${task.done ? 'Undo':'Done'}
-        </button>
-
-        <button class="btn" onclick="deleteTask(${index})">
-          Delete
-        </button>
+<div class="drawer-wrap" id="task-drawer">
+  <div class="drawer">
+    <div class="drawer-head">
+      <h3 id="drawer-title">Task</h3>
+      <button class="icon-btn" id="drawer-close">x</button>
+    </div>
+    <label>Description</label>
+    <textarea class="textarea" id="drawer-desc" placeholder="Add notes, details, or context..."></textarea>
+    <div class="grid two">
+      <div>
+        <label>Category</label>
+        <select class="select" id="drawer-priority">
+          <option value="normal">Normal</option>
+          <option value="high">High</option>
+        </select>
       </div>
-    `;
+      <div>
+        <label>Deadline</label>
+        <input class="select" type="date" id="drawer-due">
+      </div>
+    </div>
+    <label>Project Tag</label>
+    <select class="select" id="drawer-project"></select>
+    <label>Sub-tasks</label>
+    <div id="drawer-subtasks"></div>
+    <div class="row">
+      <input class="input" id="drawer-subtask-input" placeholder="Add a sub-task...">
+      <button class="btn" id="drawer-subtask-add">+</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn danger" id="drawer-delete">Delete</button>
+      <button class="btn" id="drawer-save">Save changes</button>
+    </div>
+  </div>
+</div>
 
-    list.appendChild(div);
-  });
-}
+<div class="toast" id="toast"></div>
 
-function addEvent(){
-  const name = document.getElementById('eventName');
-  const date = document.getElementById('eventDate');
-
-  if(!name.value.trim()) return;
-
-  events.push({
-    name:name.value,
-    date:date.value
-  });
-
-  name.value = '';
-  date.value = '';
-
-  saveData();
-  renderEvents();
-}
-
-function renderEvents(){
-  const list = document.getElementById('eventList');
-
-  if(events.length === 0){
-    list.innerHTML = '<p class="small">No events yet.</p>';
-    return;
+<script>
+(function(){
+  var memoryStore = {};
+  function storageGet(key, fallback){
+    try {
+      var raw = localStorage.getItem("cmos_simple_" + key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (error) {
+      return memoryStore[key] || fallback;
+    }
+  }
+  function storageSet(key, value){
+    try {
+      localStorage.setItem("cmos_simple_" + key, JSON.stringify(value));
+    } catch (error) {
+      memoryStore[key] = value;
+    }
+  }
+  function storageText(key, fallback){
+    try {
+      return localStorage.getItem("cmos_simple_" + key) || fallback;
+    } catch (error) {
+      return memoryStore[key] || fallback;
+    }
+  }
+  function storageTextSet(key, value){
+    try {
+      localStorage.setItem("cmos_simple_" + key, value);
+    } catch (error) {
+      memoryStore[key] = value;
+    }
   }
 
-  list.innerHTML = '';
+  var tasks = storageGet("tasks", []);
+  var projects = storageGet("projects", [{id:"general", name:"General", color:"#78b67b"}]);
+  var links = storageGet("links", [
+    {id:"link1", projectId:"general", name:"Discord", url:"https://discord.com"},
+    {id:"link2", projectId:"general", name:"Notion", url:"https://notion.so"}
+  ]);
+  var notes = storageGet("notes", []);
+  var events = storageGet("events", []);
+  var kpis = storageGet("kpis", []);
+  var resources = storageGet("resources", []);
+  var milestones = storageGet("milestones", []);
+  var dashboardProject = storageText("dashboardProject", "general");
+  var linksFilter = storageText("linksFilter", "all");
+  var taskProjectFilter = storageText("taskProjectFilter", "all");
+  var highlightedKpiProject = storageText("highlightedKpiProject", dashboardProject);
+  var activeTaskId = null;
+  var editingProjectId = null;
+  var selectedProjectColor = "#78b67b";
+  var calendarDate = new Date();
+  var projectPalette = ["#78b67b","#76a9d6","#d6ab4f","#d86d5d","#b58adf","#64c6bd","#d889b4","#9bbf62"];
 
-  events.forEach(event=>{
-    const div = document.createElement('div');
+  function el(id){ return document.getElementById(id); }
+  function uid(prefix){ return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function escapeHtml(value){
+    return String(value || "").replace(/[&<>"']/g, function(match){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[match];
+    });
+  }
+  function toast(message){
+    var box = el("toast");
+    box.textContent = message;
+    box.classList.add("show");
+    setTimeout(function(){ box.classList.remove("show"); }, 1800);
+  }
+  function saveAll(){
+    storageSet("tasks", tasks);
+    storageSet("projects", projects);
+    storageSet("links", links);
+    storageSet("notes", notes);
+    storageSet("events", events);
+    storageSet("kpis", kpis);
+    storageSet("resources", resources);
+    storageSet("milestones", milestones);
+  }
 
-    div.className = 'task';
+  function projectName(projectId){
+    var found = projects.find(function(project){ return project.id === projectId; });
+    return found ? found.name : "General";
+  }
+  function projectColor(projectId){
+    var found = projects.find(function(project){ return project.id === projectId; });
+    return found && found.color ? found.color : "#78b67b";
+  }
+  function projectOptions(selected, includeAll){
+    projects.forEach(function(project){ if (!project.color) project.color = "#78b67b"; });
+    var html = includeAll ? '<option value="all">All projects</option>' : "";
+    projects.forEach(function(project){
+      html += '<option value="' + project.id + '"' + (selected === project.id ? " selected" : "") + '>' + escapeHtml(project.name) + '</option>';
+    });
+    return html;
+  }
+  function ensureValidProjectSelection(){
+    if (!projects.some(function(project){ return project.id === dashboardProject; })) {
+      dashboardProject = projects[0] ? projects[0].id : "general";
+      storageTextSet("dashboardProject", dashboardProject);
+    }
+    if (linksFilter !== "all" && !projects.some(function(project){ return project.id === linksFilter; })) {
+      linksFilter = "all";
+      storageTextSet("linksFilter", linksFilter);
+    }
+    if (taskProjectFilter !== "all" && !projects.some(function(project){ return project.id === taskProjectFilter; })) {
+      taskProjectFilter = "all";
+      storageTextSet("taskProjectFilter", taskProjectFilter);
+    }
+    if (!projects.some(function(project){ return project.id === highlightedKpiProject; })) {
+      highlightedKpiProject = projects[0] ? projects[0].id : "general";
+      storageTextSet("highlightedKpiProject", highlightedKpiProject);
+    }
+  }
 
-    div.innerHTML = `
-      <span>
-        <strong>${event.name}</strong><br>
-        <small>${event.date || 'No date set'}</small>
-      </span>
-    `;
+  function renderStats(){
+    var done = tasks.filter(function(task){ return task.status === "done"; }).length;
+    var doing = tasks.filter(function(task){ return task.status === "doing"; }).length;
+    var todo = tasks.filter(function(task){ return task.status === "todo"; }).length;
+    var percent = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+    el("stats").innerHTML =
+      '<div class="stat"><small>Tasks today</small><strong>' + tasks.length + '</strong><span>' + todo + ' remaining</span></div>' +
+      '<div class="stat"><small>Completed</small><strong style="color:var(--accent)">' + done + '</strong><span>this week</span></div>' +
+      '<div class="stat"><small>Milestones</small><strong>' + milestones.length + '</strong><span>in journey</span></div>' +
+      '<div class="stat"><small>Events</small><strong>' + events.length + '</strong><span>scheduled</span></div>';
+    el("task-progress").style.width = percent + "%";
+    el("task-progress-label").textContent = tasks.length ? done + " of " + tasks.length + " tasks complete" : "Add your first task to start tracking.";
+  }
 
-    list.appendChild(div);
+  function taskTemplate(task){
+    var due = task.due ? '<span>Due ' + escapeHtml(task.due) + '</span>' : "";
+    return '' +
+      '<div class="task" data-task="' + task.id + '">' +
+        '<button class="check ' + (task.status === "done" ? "done" : "") + '" data-action="toggle-task" title="Mark done"></button>' +
+        '<div class="task-main" data-action="open-task">' +
+          '<div class="task-title ' + (task.status === "done" ? "done" : "") + '">' + escapeHtml(task.title) + '</div>' +
+          '<div class="meta">' +
+            '<span class="pill ' + task.status + '">' + escapeHtml(task.status) + '</span>' +
+            '<span>' + escapeHtml(projectName(task.projectId || "general")) + '</span>' +
+            (task.priority === "high" ? '<span class="pill high">High priority</span>' : '<span>Normal</span>') +
+            due +
+          '</div>' +
+        '</div>' +
+        '<select class="select" data-action="status-task" style="width:112px">' +
+          '<option value="todo"' + (task.status === "todo" ? " selected" : "") + '>To do</option>' +
+          '<option value="doing"' + (task.status === "doing" ? " selected" : "") + '>Doing</option>' +
+          '<option value="done"' + (task.status === "done" ? " selected" : "") + '>Done</option>' +
+        '</select>' +
+        '<button class="icon-btn" data-action="delete-task" title="Delete">x</button>' +
+      '</div>';
+  }
+  function renderProjectControls(){
+    ensureValidProjectSelection();
+    el("dash-task-project").innerHTML = projectOptions(dashboardProject, false);
+    el("task-project").innerHTML = projectOptions(dashboardProject, false);
+    el("task-project-filter").innerHTML = projectOptions(taskProjectFilter, true);
+    el("drawer-project").innerHTML = projectOptions(dashboardProject, false);
+    el("kpi-project").innerHTML = projectOptions(dashboardProject, false);
+    el("kpi-highlight-project").innerHTML = projectOptions(highlightedKpiProject, false);
+    renderProjectColorChoices();
+  }
+  function renderTasks(){
+    var sorted = tasks.slice().sort(function(a,b){
+      var rank = {doing:0,todo:1,done:2};
+      return rank[a.status] - rank[b.status];
+    });
+    var dashboardTasks = sorted.slice(0, 6);
+    var visibleTasks = sorted.filter(function(task){ return taskProjectFilter === "all" || (task.projectId || "general") === taskProjectFilter; });
+    el("dash-task-list").innerHTML = dashboardTasks.length ? dashboardTasks.map(taskTemplate).join("") : '<div class="empty">No tasks yet. Add one above.</div>';
+    el("task-list").innerHTML = visibleTasks.length ? visibleTasks.map(taskTemplate).join("") : '<div class="empty">No tasks for this project yet.</div>';
+  }
+  function addTask(title, priority, status, due, projectId){
+    if (!title.trim()) {
+      toast("Add a task name first");
+      return;
+    }
+    tasks.push({id:uid("task"), title:title.trim(), priority:priority || "normal", status:status || "todo", due:due || "", projectId:projectId || "general", desc:"", subtasks:[]});
+    saveAll();
+    renderAll();
+    toast("Task added");
+  }
+  function handleTaskClick(event){
+    var taskBox = event.target.closest("[data-task]");
+    if (!taskBox) return;
+    var id = taskBox.getAttribute("data-task");
+    var task = tasks.find(function(item){ return item.id === id; });
+    if (!task) return;
+    var action = event.target.getAttribute("data-action");
+    if (action === "toggle-task") {
+      task.status = task.status === "done" ? "todo" : "done";
+      saveAll();
+      renderAll();
+    }
+    if (action === "delete-task") {
+      tasks = tasks.filter(function(item){ return item.id !== id; });
+      saveAll();
+      renderAll();
+      toast("Task removed");
+    }
+    if (action === "open-task") {
+      openTaskDrawer(id);
+    }
+  }
+  function handleTaskChange(event){
+    if (event.target.getAttribute("data-action") !== "status-task") return;
+    var taskBox = event.target.closest("[data-task]");
+    var task = tasks.find(function(item){ return item.id === taskBox.getAttribute("data-task"); });
+    if (!task) return;
+    task.status = event.target.value;
+    saveAll();
+    renderAll();
+  }
+  function clearCompleted(){
+    tasks = tasks.filter(function(task){ return task.status !== "done"; });
+    saveAll();
+    renderAll();
+    toast("Completed tasks cleared");
+  }
+
+  function openTaskDrawer(id){
+    var task = tasks.find(function(item){ return item.id === id; });
+    if (!task) return;
+    activeTaskId = id;
+    el("drawer-title").textContent = task.title;
+    el("drawer-desc").value = task.desc || "";
+    el("drawer-priority").value = task.priority || "normal";
+    el("drawer-due").value = task.due || "";
+    el("drawer-project").value = task.projectId || "general";
+    renderDrawerSubtasks(task);
+    el("task-drawer").classList.add("open");
+  }
+  function renderDrawerSubtasks(task){
+    var subtasks = task.subtasks || [];
+    el("drawer-subtasks").innerHTML = subtasks.length ? subtasks.map(function(subtask, index){
+      return '<div class="subtask" data-subtask="' + index + '"><button class="check ' + (subtask.done ? "done" : "") + '" data-action="toggle-subtask"></button><span class="' + (subtask.done ? "task-title done" : "") + '">' + escapeHtml(subtask.text) + '</span><button class="icon-btn" data-action="delete-subtask">x</button></div>';
+    }).join("") : '<div class="empty">No sub-tasks yet.</div>';
+  }
+  function activeTask(){
+    return tasks.find(function(task){ return task.id === activeTaskId; });
+  }
+  function closeTaskDrawer(){
+    el("task-drawer").classList.remove("open");
+    activeTaskId = null;
+  }
+
+  function linkTemplate(link){
+    return '' +
+      '<div class="link-card" data-link="' + link.id + '">' +
+        '<button class="icon-btn" data-action="delete-link" style="position:absolute;right:8px;top:6px">x</button>' +
+        '<a href="' + escapeHtml(link.url) + '" target="_blank" rel="noreferrer">' + escapeHtml(link.name) + '</a>' +
+        '<small>' + escapeHtml(projectName(link.projectId)) + '</small>' +
+      '</div>';
+  }
+  function renderLinks(){
+    ensureValidProjectSelection();
+    el("dashboard-project-select").innerHTML = projectOptions(dashboardProject, true);
+    el("links-filter").innerHTML = projectOptions(linksFilter, true);
+    el("link-project").innerHTML = projectOptions(dashboardProject, false);
+
+    var dashboardProjects = dashboardProject === "all" ? projects : projects.filter(function(project){ return project.id === dashboardProject; });
+    el("dashboard-links").innerHTML = dashboardProjects.map(function(project){
+      var projectLinks = links.filter(function(link){ return link.projectId === project.id; });
+      return '' +
+        '<div class="project-block" data-project="' + project.id + '">' +
+          '<div class="project-name"><div class="project-left"><span class="project-dot" style="background:' + projectColor(project.id) + '"></span><span>' + escapeHtml(project.name) + '</span><span class="project-count">' + projectLinks.length + '</span></div><button class="tiny-link" data-action="quick-add-link">+ Add link</button></div>' +
+          '<div class="link-grid">' + (projectLinks.length ? projectLinks.map(linkTemplate).join("") : "") + '<button class="link-card add-link-card" data-action="quick-add-link"><span>+<br><small>Add link</small></span></button></div>' +
+        '</div>';
+    }).join("");
+
+    var visibleProjects = projects.filter(function(project){ return linksFilter === "all" || linksFilter === project.id; });
+    if (!visibleProjects.length) {
+      el("project-link-list").innerHTML = '<div class="empty">Create your first project.</div>';
+      return;
+    }
+    el("project-link-list").innerHTML = visibleProjects.map(function(project){
+      var projectLinks = links.filter(function(link){ return link.projectId === project.id; });
+      return '' +
+        '<div class="project-block" data-project="' + project.id + '">' +
+          '<div class="project-name"><div class="project-left"><span class="project-dot" style="background:' + projectColor(project.id) + '"></span><span>' + escapeHtml(project.name) + '</span><span class="project-count">' + projectLinks.length + '</span></div>' +
+          (project.id === "general" ? '' : '<button class="btn danger" data-action="delete-project">Delete project</button>') +
+          '</div>' +
+          '<div class="link-grid">' + (projectLinks.length ? projectLinks.map(linkTemplate).join("") : "") + '<button class="link-card add-link-card" data-action="quick-add-link"><span>+<br><small>Add link</small></span></button></div>' +
+        '</div>';
+    }).join("");
+  }
+  function renderProjectColorChoices(){
+    var wrap = el("project-colors");
+    if (!wrap) return;
+    wrap.innerHTML = projectPalette.map(function(color){
+      return '<button class="color-choice ' + (selectedProjectColor === color ? "active" : "") + '" data-color="' + color + '" style="background:' + color + '" title="' + color + '"></button>';
+    }).join("");
+  }
+  function openProjectModal(projectId){
+    editingProjectId = projectId || null;
+    var project = projects.find(function(item){ return item.id === editingProjectId; });
+    el("project-modal-title").textContent = project ? "Edit Project" : "New Project";
+    el("project-name").value = project ? project.name : "";
+    selectedProjectColor = project && project.color ? project.color : "#78b67b";
+    renderProjectColorChoices();
+    openModal("project-modal");
+  }
+  function createProject(name){
+    if (!name.trim()) {
+      toast("Add a project name first");
+      return;
+    }
+    var project;
+    if (editingProjectId) {
+      project = projects.find(function(item){ return item.id === editingProjectId; });
+      if (!project) return;
+      project.name = name.trim();
+      project.color = selectedProjectColor;
+    } else {
+      project = {id:uid("project"), name:name.trim(), color:selectedProjectColor};
+      projects.push(project);
+      dashboardProject = project.id;
+      linksFilter = project.id;
+      storageTextSet("dashboardProject", dashboardProject);
+      storageTextSet("linksFilter", linksFilter);
+    }
+    saveAll();
+    renderAll();
+    closeModals();
+    el("project-name").value = "";
+    editingProjectId = null;
+    toast("Project saved");
+  }
+  function addLink(projectId, name, url){
+    if (!projectId) {
+      toast("Create a project first");
+      return;
+    }
+    if (!name.trim() || !url.trim()) {
+      toast("Add a link name and URL");
+      return;
+    }
+    var finalUrl = url.trim();
+    if (!/^https?:\/\//i.test(finalUrl)) {
+      finalUrl = "https://" + finalUrl;
+    }
+    links.push({id:uid("link"), projectId:projectId, name:name.trim(), url:finalUrl});
+    saveAll();
+    renderAll();
+    closeModals();
+    el("link-name").value = "";
+    el("link-url").value = "";
+    toast("Link saved");
+  }
+  function handleLinkClick(event){
+    var action = event.target.getAttribute("data-action");
+    if (action === "delete-link") {
+      event.preventDefault();
+      var card = event.target.closest("[data-link]");
+      var id = card.getAttribute("data-link");
+      links = links.filter(function(link){ return link.id !== id; });
+      saveAll();
+      renderAll();
+      toast("Link removed");
+    }
+    if (action === "delete-project") {
+      var block = event.target.closest("[data-project]");
+      var projectId = block.getAttribute("data-project");
+      projects = projects.filter(function(project){ return project.id !== projectId; });
+      links = links.filter(function(link){ return link.projectId !== projectId; });
+      if (dashboardProject === projectId) dashboardProject = projects[0] ? projects[0].id : "general";
+      if (linksFilter === projectId) linksFilter = "all";
+      storageTextSet("dashboardProject", dashboardProject);
+      storageTextSet("linksFilter", linksFilter);
+      saveAll();
+      renderAll();
+      toast("Project removed");
+    }
+    if (action === "edit-project") {
+      var editBlock = event.target.closest("[data-project]");
+      if (editBlock) openProjectModal(editBlock.getAttribute("data-project"));
+    }
+    if (action === "quick-add-link") {
+      var targetBlock = event.target.closest("[data-project]");
+      var selectedProject = targetBlock ? targetBlock.getAttribute("data-project") : dashboardProject;
+      el("link-project").value = selectedProject === "all" ? (projects[0] ? projects[0].id : "general") : selectedProject;
+      openModal("link-modal");
+    }
+  }
+
+  function renderProjects(){
+    el("project-list").innerHTML = projects.map(function(project){
+      var taskCount = tasks.filter(function(task){ return (task.projectId || "general") === project.id; }).length;
+      var linkCount = links.filter(function(link){ return link.projectId === project.id; }).length;
+      return '' +
+        '<div class="note" data-project="' + project.id + '">' +
+          '<div class="note-main"><strong><span class="project-dot" style="display:inline-block;background:' + projectColor(project.id) + ';margin-right:8px"></span>' + escapeHtml(project.name) + '</strong><div class="meta"><span>' + taskCount + ' tasks</span><span>' + linkCount + ' links</span></div></div>' +
+          '<button class="btn ghost" data-action="edit-project">Edit</button>' +
+          (project.id === "general" ? '' : '<button class="icon-btn" data-action="delete-project">x</button>') +
+        '</div>';
+    }).join("");
+  }
+
+  function renderEvents(){
+    var sorted = events.slice().sort(function(a,b){ return (a.date + a.time).localeCompare(b.date + b.time); });
+    var y = calendarDate.getFullYear();
+    var m = calendarDate.getMonth();
+    el("calendar-title").textContent = calendarDate.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+    var first = new Date(y,m,1).getDay();
+    var days = new Date(y,m+1,0).getDate();
+    var today = new Date();
+    var cal = '<div class="cal-h">Sun</div><div class="cal-h">Mon</div><div class="cal-h">Tue</div><div class="cal-h">Wed</div><div class="cal-h">Thu</div><div class="cal-h">Fri</div><div class="cal-h">Sat</div>';
+    for (var b=0;b<first;b++) cal += '<div class="cal-day"></div>';
+    for (var d=1;d<=days;d++) {
+      var dateKey = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      var dayEvents = events.filter(function(event){ return event.date === dateKey; });
+      cal += '<div class="cal-day ' + (today.getFullYear()===y && today.getMonth()===m && today.getDate()===d ? 'today' : '') + '"><div class="cal-num">' + d + '</div>' + dayEvents.map(function(event){ return '<span class="cal-chip">' + escapeHtml(event.title) + '</span>'; }).join('') + '</div>';
+    }
+    el("calendar-grid").innerHTML = cal;
+    if (el("dashboard-event-list")) {
+      var upcoming = sorted.filter(function(event){ return !event.date || event.date >= new Date().toISOString().slice(0,10); }).slice(0,5);
+      el("dashboard-event-list").innerHTML = upcoming.length ? upcoming.map(function(event){
+        return '<div class="note" data-event="' + event.id + '"><div class="note-main"><strong>' + escapeHtml(event.title) + '</strong><div class="meta"><span>' + escapeHtml(event.date || "No date") + '</span><span>' + escapeHtml(event.time || "") + '</span></div></div></div>';
+      }).join("") : '<div class="empty">No upcoming events</div>';
+    }
+    el("event-list").innerHTML = sorted.length ? sorted.map(function(event){
+      return '<div class="note" data-event="' + event.id + '"><div class="note-main"><strong>' + escapeHtml(event.title) + '</strong><div class="meta"><span>' + escapeHtml(event.date || "No date") + '</span><span>' + escapeHtml(event.time || "") + '</span></div></div><button class="icon-btn" data-action="delete-event">x</button></div>';
+    }).join("") : '<div class="empty">No events yet.</div>';
+  }
+
+  function renderKpis(){
+    kpis.forEach(function(kpi){ if (!kpi.projectId) kpi.projectId = "general"; });
+    var projectKpis = kpis.filter(function(kpi){ return kpi.projectId === highlightedKpiProject; });
+    var latest = projectKpis[0];
+    var previous = projectKpis[1];
+    function trend(metric){
+      if (!latest) return '<span class="trend flat">-</span>';
+      if (!previous) return '<span class="trend flat">new</span>';
+      var diff = latest[metric] - previous[metric];
+      if (diff > 0) return '<span class="trend up">up +' + diff + '</span>';
+      if (diff < 0) return '<span class="trend down">down ' + Math.abs(diff) + '</span>';
+      return '<span class="trend flat">no change</span>';
+    }
+    function sum(list, metric){
+      return list.reduce(function(total, item){ return total + Number(item[metric] || 0); }, 0);
+    }
+    function compareBlock(label, currentList, previousList){
+      function line(metric, name){
+        var now = sum(currentList, metric);
+        var before = sum(previousList, metric);
+        var diff = now - before;
+        var cls = diff > 0 ? "up" : diff < 0 ? "down" : "flat";
+        var text = diff > 0 ? "up +" + diff : diff < 0 ? "down " + Math.abs(diff) : "no change";
+        return '<div class="meta"><span>' + name + ': ' + now + '</span><span class="trend ' + cls + '">' + text + '</span></div>';
+      }
+      return '<div class="stat"><small>' + label + '</small><strong>' + currentList.length + '</strong><span>logs in period</span>' + line("members","Members") + line("messages","Messages") + line("participants","Participants") + '</div>';
+    }
+    var now = new Date();
+    var weekAgo = new Date(now); weekAgo.setDate(now.getDate()-7);
+    var twoWeeksAgo = new Date(now); twoWeeksAgo.setDate(now.getDate()-14);
+    var monthAgo = new Date(now); monthAgo.setDate(now.getDate()-30);
+    var twoMonthsAgo = new Date(now); twoMonthsAgo.setDate(now.getDate()-60);
+    function loggedBetween(item, start, end){
+      var dt = new Date(item.date);
+      return dt >= start && dt < end;
+    }
+    var currentWeek = projectKpis.filter(function(item){ return loggedBetween(item, weekAgo, new Date(now.getTime()+86400000)); });
+    var previousWeek = projectKpis.filter(function(item){ return loggedBetween(item, twoWeeksAgo, weekAgo); });
+    var currentMonth = projectKpis.filter(function(item){ return loggedBetween(item, monthAgo, new Date(now.getTime()+86400000)); });
+    var previousMonth = projectKpis.filter(function(item){ return loggedBetween(item, twoMonthsAgo, monthAgo); });
+    el("kpi-highlight").innerHTML = latest ? (
+      '<div class="stat"><small>Members</small><strong>' + latest.members + '</strong><span>' + trend("members") + '</span></div>' +
+      '<div class="stat"><small>Messages</small><strong>' + latest.messages + '</strong><span>' + trend("messages") + '</span></div>' +
+      '<div class="stat"><small>Participants</small><strong>' + latest.participants + '</strong><span>' + trend("participants") + '</span></div>' +
+      compareBlock("Weekly breakdown", currentWeek, previousWeek) +
+      compareBlock("Monthly breakdown", currentMonth, previousMonth)
+    ) : '<div class="empty">No KPI logs for this project yet.</div>';
+    el("kpi-list").innerHTML = kpis.length ? kpis.map(function(kpi){
+      return '<div class="note" data-kpi="' + kpi.id + '"><div class="note-main"><strong>' + escapeHtml(projectName(kpi.projectId)) + ' - ' + escapeHtml(kpi.date) + '</strong><div class="meta"><span>Members: ' + kpi.members + '</span><span>Messages: ' + kpi.messages + '</span><span>Participants: ' + kpi.participants + '</span></div></div><button class="icon-btn" data-action="delete-kpi">x</button></div>';
+    }).join("") : '<div class="empty">No KPI logs yet.</div>';
+  }
+
+  function renderResources(){
+    el("resource-list").innerHTML = resources.length ? resources.map(function(resource){
+      return '<div class="link-card" data-resource="' + resource.id + '"><button class="icon-btn" data-action="delete-resource" style="position:absolute;right:8px;top:6px">x</button><a href="' + escapeHtml(resource.url) + '" target="_blank" rel="noreferrer">' + escapeHtml(resource.title) + '</a><small>Resource</small></div>';
+    }).join("") : '<div class="empty">No resources yet.</div>';
+  }
+
+  function renderMilestones(){
+    el("milestone-list").innerHTML = milestones.length ? milestones.map(function(milestone){
+      return '<div class="task" data-milestone="' + milestone.id + '"><button class="check ' + (milestone.done ? "done" : "") + '" data-action="toggle-milestone"></button><div class="task-main"><div class="task-title ' + (milestone.done ? "done" : "") + '">' + escapeHtml(milestone.title) + '</div></div><button class="icon-btn" data-action="delete-milestone">x</button></div>';
+    }).join("") : '<div class="empty">No milestones yet.</div>';
+  }
+
+  function renderNotes(){
+    el("note-list").innerHTML = notes.length ? notes.map(function(note){
+      return '' +
+        '<div class="note" data-note="' + note.id + '">' +
+          '<div class="note-main"><strong>' + escapeHtml(note.title) + '</strong><div class="meta"><span>' + escapeHtml(note.category) + '</span><span>' + escapeHtml(note.date) + '</span></div><div class="hint" style="margin-top:6px">' + escapeHtml(note.body) + '</div></div>' +
+          '<button class="icon-btn" data-action="delete-note">x</button>' +
+        '</div>';
+    }).join("") : '<div class="empty">No notes yet.</div>';
+  }
+  function addNote(){
+    var title = el("note-title").value.trim();
+    if (!title) {
+      toast("Add a note title first");
+      return;
+    }
+    notes.unshift({id:uid("note"), title:title, category:el("note-category").value, body:el("note-body").value.trim(), date:new Date().toLocaleDateString()});
+    el("note-title").value = "";
+    el("note-body").value = "";
+    saveAll();
+    renderAll();
+    toast("Note added");
+  }
+
+  function generateEventDraft(){
+    var name = el("event-name").value.trim() || "Community Event";
+    var goal = el("event-goal").value.trim() || "bring the community together";
+    var reward = el("event-reward").value.trim() || "community points";
+    var format = el("event-format").value;
+    el("event-output").value =
+      "EVENT IDEA\\n" +
+      name + " on " + format + "\\n\\n" +
+      "GOAL\\n" +
+      goal + "\\n\\n" +
+      "MECHANICS\\n" +
+      "1. Announce the event 24 hours before it starts.\\n" +
+      "2. Pin the rules, timeline, and reward details.\\n" +
+      "3. Ask members to participate by replying, submitting, voting, or joining live.\\n" +
+      "4. Track winners or top contributors in a simple sheet.\\n\\n" +
+      "REWARDS\\n" +
+      reward + "\\n\\n" +
+      "ANNOUNCEMENT DRAFT\\n" +
+      "Hey everyone, we are hosting " + name + "! Join us on " + format + " as we " + goal + ". Rewards: " + reward + ". More details soon.";
+  }
+
+  function switchView(viewId){
+    document.querySelectorAll(".view").forEach(function(view){ view.classList.toggle("active", view.id === viewId); });
+    document.querySelectorAll(".nav button").forEach(function(button){ button.classList.toggle("active", button.getAttribute("data-view") === viewId); });
+    var label = {dashboard:"Dashboard",tasks:"Tasks",calendar:"Calendar",links:"Quick Links",projectsView:"Projects",eventgen:"Event Generator",kpi:"KPI Tracking",notes:"Ops Notes",resources:"Resources",journey:"Journey"}[viewId] || "Dashboard";
+    el("page-title").textContent = label;
+  }
+  function openModal(id){ el(id).classList.add("open"); }
+  function closeModals(){ document.querySelectorAll(".modal-wrap").forEach(function(modal){ modal.classList.remove("open"); }); }
+  function renderAll(){
+    el("today").textContent = new Date().toLocaleDateString(undefined, {weekday:"long", month:"long", day:"numeric", year:"numeric"});
+    renderStats();
+    renderProjectControls();
+    renderTasks();
+    renderLinks();
+    renderNotes();
+    renderProjects();
+    renderEvents();
+    renderKpis();
+    renderResources();
+    renderMilestones();
+  }
+
+  document.querySelectorAll(".nav button").forEach(function(button){
+    button.addEventListener("click", function(){ switchView(button.getAttribute("data-view")); });
   });
-}
+  document.querySelectorAll("[data-go]").forEach(function(button){
+    button.addEventListener("click", function(){ switchView(button.getAttribute("data-go")); });
+  });
+  document.querySelectorAll("[data-close-modal]").forEach(function(button){
+    button.addEventListener("click", closeModals);
+  });
+  document.querySelectorAll(".modal-wrap").forEach(function(modal){
+    modal.addEventListener("click", function(event){ if (event.target === modal) closeModals(); });
+  });
 
-function renderDashboard(){
-  document.getElementById('taskCount').textContent = tasks.length;
-  document.getElementById('eventCount').textContent = events.length;
-}
+  el("dash-task-add").addEventListener("click", function(){
+    addTask(el("dash-task-title").value, el("dash-task-priority").value, "todo", "", el("dash-task-project").value);
+    el("dash-task-title").value = "";
+  });
+  el("task-add").addEventListener("click", function(){
+    addTask(el("task-title").value, el("task-priority").value, el("task-status").value, el("task-due").value, el("task-project").value);
+    el("task-title").value = "";
+    el("task-due").value = "";
+  });
+  ["dash-task-title", "task-title"].forEach(function(id){
+    el(id).addEventListener("keydown", function(event){
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (id === "dash-task-title") el("dash-task-add").click();
+        if (id === "task-title") el("task-add").click();
+      }
+    });
+  });
+  el("dash-task-list").addEventListener("click", handleTaskClick);
+  el("task-list").addEventListener("click", handleTaskClick);
+  el("dash-task-list").addEventListener("change", handleTaskChange);
+  el("task-list").addEventListener("change", handleTaskChange);
+  el("clear-completed-dashboard").addEventListener("click", clearCompleted);
+  el("clear-completed-tasks").addEventListener("click", clearCompleted);
+  el("task-project-filter").addEventListener("change", function(event){
+    taskProjectFilter = event.target.value;
+    storageTextSet("taskProjectFilter", taskProjectFilter);
+    renderTasks();
+  });
+  el("drawer-close").addEventListener("click", closeTaskDrawer);
+  el("task-drawer").addEventListener("click", function(event){ if (event.target === el("task-drawer")) closeTaskDrawer(); });
+  el("drawer-save").addEventListener("click", function(){
+    var task = activeTask();
+    if (!task) return;
+    task.desc = el("drawer-desc").value.trim();
+    task.priority = el("drawer-priority").value;
+    task.due = el("drawer-due").value;
+    task.projectId = el("drawer-project").value;
+    saveAll();
+    renderAll();
+    closeTaskDrawer();
+    toast("Task saved");
+  });
+  el("drawer-delete").addEventListener("click", function(){
+    if (!activeTaskId) return;
+    tasks = tasks.filter(function(task){ return task.id !== activeTaskId; });
+    saveAll();
+    renderAll();
+    closeTaskDrawer();
+    toast("Task deleted");
+  });
+  el("drawer-subtask-add").addEventListener("click", function(){
+    var task = activeTask();
+    var text = el("drawer-subtask-input").value.trim();
+    if (!task || !text) return;
+    if (!task.subtasks) task.subtasks = [];
+    task.subtasks.push({text:text, done:false});
+    el("drawer-subtask-input").value = "";
+    saveAll();
+    renderDrawerSubtasks(task);
+    renderAll();
+  });
+  el("drawer-subtasks").addEventListener("click", function(event){
+    var task = activeTask();
+    var row = event.target.closest("[data-subtask]");
+    if (!task || !row) return;
+    var index = Number(row.getAttribute("data-subtask"));
+    if (event.target.getAttribute("data-action") === "toggle-subtask") task.subtasks[index].done = !task.subtasks[index].done;
+    if (event.target.getAttribute("data-action") === "delete-subtask") task.subtasks.splice(index, 1);
+    saveAll();
+    renderDrawerSubtasks(task);
+    renderAll();
+  });
 
-function saveApiKey(){
-  const key = document.getElementById('apiKey').value;
+  el("dashboard-project-select").addEventListener("change", function(event){
+    dashboardProject = event.target.value;
+    storageTextSet("dashboardProject", dashboardProject);
+    renderLinks();
+  });
+  el("links-filter").addEventListener("change", function(event){
+    linksFilter = event.target.value;
+    storageTextSet("linksFilter", linksFilter);
+    renderLinks();
+  });
+  el("open-project-modal").addEventListener("click", function(){ openProjectModal(); });
+  el("open-project-modal-2").addEventListener("click", function(){ openProjectModal(); });
+  el("open-link-modal").addEventListener("click", function(){ openModal("link-modal"); });
+  el("project-save").addEventListener("click", function(){ createProject(el("project-name").value); });
+  el("project-colors").addEventListener("click", function(event){
+    var color = event.target.getAttribute("data-color");
+    if (!color) return;
+    selectedProjectColor = color;
+    renderProjectColorChoices();
+  });
+  el("link-save").addEventListener("click", function(){ addLink(el("link-project").value, el("link-name").value, el("link-url").value); });
+  el("dashboard-links").addEventListener("click", handleLinkClick);
+  el("project-link-list").addEventListener("click", handleLinkClick);
+  el("project-list").addEventListener("click", handleLinkClick);
 
-  localStorage.setItem('workspace_api_key', key);
+  el("generate-event").addEventListener("click", generateEventDraft);
+  el("copy-event").addEventListener("click", function(){
+    var text = el("event-output").value;
+    if (!text) {
+      toast("Generate a draft first");
+      return;
+    }
+    if (navigator.clipboard) navigator.clipboard.writeText(text);
+    toast("Copied");
+  });
+  el("note-add").addEventListener("click", addNote);
+  el("note-list").addEventListener("click", function(event){
+    if (event.target.getAttribute("data-action") === "delete-note") {
+      var noteBox = event.target.closest("[data-note]");
+      notes = notes.filter(function(note){ return note.id !== noteBox.getAttribute("data-note"); });
+      saveAll();
+      renderAll();
+      toast("Note removed");
+    }
+  });
+  el("event-add").addEventListener("click", function(){
+    var title = el("event-title").value.trim();
+    if (!title) { toast("Add an event name first"); return; }
+    events.push({id:uid("event"), title:title, date:el("event-date").value, time:el("event-time").value});
+    el("event-title").value = ""; el("event-date").value = ""; el("event-time").value = "";
+    saveAll(); renderAll(); toast("Event added");
+  });
+  el("calendar-prev").addEventListener("click", function(){
+    calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth()-1, 1);
+    renderEvents();
+  });
+  el("calendar-next").addEventListener("click", function(){
+    calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth()+1, 1);
+    renderEvents();
+  });
+  el("event-list").addEventListener("click", function(event){
+    if (event.target.getAttribute("data-action") === "delete-event") {
+      var box = event.target.closest("[data-event]");
+      events = events.filter(function(item){ return item.id !== box.getAttribute("data-event"); });
+      saveAll(); renderAll(); toast("Event removed");
+    }
+  });
+  el("kpi-add").addEventListener("click", function(){
+    var projectId = el("kpi-project").value;
+    kpis.unshift({id:uid("kpi"), projectId:projectId, date:new Date().toLocaleDateString(), members:Number(el("kpi-members").value || 0), messages:Number(el("kpi-messages").value || 0), participants:Number(el("kpi-participants").value || 0)});
+    highlightedKpiProject = projectId;
+    storageTextSet("highlightedKpiProject", highlightedKpiProject);
+    el("kpi-members").value = ""; el("kpi-messages").value = ""; el("kpi-participants").value = "";
+    saveAll(); renderAll(); toast("KPI logged");
+  });
+  el("kpi-highlight-project").addEventListener("change", function(event){
+    highlightedKpiProject = event.target.value;
+    storageTextSet("highlightedKpiProject", highlightedKpiProject);
+    renderKpis();
+  });
+  el("kpi-list").addEventListener("click", function(event){
+    if (event.target.getAttribute("data-action") === "delete-kpi") {
+      var box = event.target.closest("[data-kpi]");
+      kpis = kpis.filter(function(item){ return item.id !== box.getAttribute("data-kpi"); });
+      saveAll(); renderAll(); toast("KPI removed");
+    }
+  });
+  el("resource-add").addEventListener("click", function(){
+    var title = el("resource-title").value.trim();
+    var url = el("resource-url").value.trim();
+    if (!title || !url) { toast("Add a resource title and URL"); return; }
+    if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+    resources.push({id:uid("resource"), title:title, url:url});
+    el("resource-title").value = ""; el("resource-url").value = "";
+    saveAll(); renderAll(); toast("Resource added");
+  });
+  el("resource-list").addEventListener("click", function(event){
+    if (event.target.getAttribute("data-action") === "delete-resource") {
+      event.preventDefault();
+      var box = event.target.closest("[data-resource]");
+      resources = resources.filter(function(item){ return item.id !== box.getAttribute("data-resource"); });
+      saveAll(); renderAll(); toast("Resource removed");
+    }
+  });
+  el("milestone-add").addEventListener("click", function(){
+    var title = el("milestone-title").value.trim();
+    if (!title) { toast("Add a milestone first"); return; }
+    milestones.push({id:uid("milestone"), title:title, done:false});
+    el("milestone-title").value = "";
+    saveAll(); renderAll(); toast("Milestone added");
+  });
+  el("milestone-list").addEventListener("click", function(event){
+    var box = event.target.closest("[data-milestone]");
+    if (!box) return;
+    var id = box.getAttribute("data-milestone");
+    if (event.target.getAttribute("data-action") === "toggle-milestone") {
+      var item = milestones.find(function(milestone){ return milestone.id === id; });
+      if (item) item.done = !item.done;
+      saveAll(); renderAll();
+    }
+    if (event.target.getAttribute("data-action") === "delete-milestone") {
+      milestones = milestones.filter(function(item){ return item.id !== id; });
+      saveAll(); renderAll(); toast("Milestone removed");
+    }
+  });
 
-  alert('API key saved locally.');
-}
-
-function generateContent(){
-  const type = document.getElementById('contentType').value;
-  const context = document.getElementById('contentContext').value;
-
-  const output = `
-${type}
-
-Topic:
-${context}
-
-Suggested Hook:
-🔥 Big things are coming.
-
-CTA:
-Join the community and stay tuned.
-
-Hashtags:
-#Web3 #Community
-  `;
-
-  document.getElementById('generatedOutput').innerText = output;
-}
-
-renderTasks();
-renderEvents();
-renderDashboard();
+  renderAll();
+})();
 </script>
-
 </body>
 </html>
