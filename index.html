@@ -56,6 +56,7 @@ button{cursor:pointer}
 .modal-wrap.open{display:flex}.modal{width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}.modal h3{margin-bottom:14px}.modal label{display:block;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:12px 0 5px}.modal .input,.modal .select,.modal .textarea{width:100%}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .drawer-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:18;justify-content:flex-end}.drawer-wrap.open{display:flex}.drawer{width:min(380px,100%);height:100%;background:var(--panel);border-left:1px solid var(--border);padding:20px;overflow:auto}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.drawer h3{font-size:21px}.drawer label{display:block;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:14px 0 6px}.subtask{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--soft);border-radius:8px;padding:8px;margin-bottom:7px}.subtask span{flex:1}.trend{font-weight:800}.trend.up{color:var(--accent)}.trend.down{color:var(--danger)}.trend.flat{color:var(--faint)}
 .toast{position:fixed;right:22px;bottom:22px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;opacity:0;transform:translateY(8px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
+.upskill-track{margin-bottom:18px}.upskill-track-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.upskill-track-title{font-weight:700;display:flex;align-items:center;gap:8px}.track-badge{border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700}.track-badge.translation{background:rgba(118,169,214,.18);color:#9ac4e8}.track-badge.tools{background:rgba(120,182,123,.18);color:#99d19c}.track-badge.automation{background:rgba(214,171,79,.18);color:#e5c46f}.track-badge.interview{background:rgba(180,138,223,.18);color:#c9a8ef}.upskill-item{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--soft);border-radius:10px;padding:12px;margin-bottom:8px}.upskill-item-main{flex:1;min-width:0}.upskill-item-title{font-size:13px;line-height:1.4}.upskill-item-title.done{text-decoration:line-through;color:var(--faint)}.upskill-item-sub{color:var(--faint);font-size:11px;margin-top:4px}.upskill-note{color:var(--muted);font-size:12px;font-style:italic;margin-top:4px}
 @media(max-width:900px){.sidebar{position:static;width:100%;height:auto}.app{display:block}.main{margin-left:0;width:100%;padding:18px}.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}.link-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.link-grid{grid-template-columns:1fr}.top{display:block}.top span{display:block;margin-top:5px}}
 </style>
@@ -81,6 +82,7 @@ button{cursor:pointer}
       <div class="nav-section">Personal</div>
       <button data-view="resources"><span class="nav-ico">▤</span>Resources</button>
       <button data-view="journey"><span class="nav-ico">⌁</span>Journey</button>
+      <button data-view="upskill"><span class="nav-ico">🎯</span>Upskill Planner</button>
     </div>
     <div class="side-footer"><div class="side-avatar">ME</div><span>My Workspace</span></div>
   </aside>
@@ -354,6 +356,48 @@ button{cursor:pointer}
       </div>
       <div class="panel" style="margin-top:14px"><div class="list" id="milestone-list"></div></div>
     </section>
+    <!-- UPSKILL PLANNER SECTION -->
+    <section class="view" id="upskill">
+      <!-- Progress Overview -->
+      <div class="grid three" id="upskill-stats" style="margin-bottom:14px"></div>
+
+      <!-- Track Selector -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Upskill Planner</div>
+            <div class="hint">Track your growth across Web3 → Traditional translation, new tools, and AI automation.</div>
+          </div>
+          <div class="row">
+            <select class="select" id="upskill-track-filter">
+              <option value="all">All Tracks</option>
+              <option value="translation">Web3 → Traditional</option>
+              <option value="tools">New Tools</option>
+              <option value="automation">AI Automation</option>
+              <option value="interview">Interview Prep</option>
+            </select>
+          </div>
+        </div>
+        <!-- Add custom skill -->
+        <div class="row" style="margin-top:8px">
+          <input class="input" id="upskill-new-title" placeholder="Add a skill or task to learn...">
+          <select class="select" id="upskill-new-track">
+            <option value="translation">Web3 → Traditional</option>
+            <option value="tools">New Tools</option>
+            <option value="automation">AI Automation</option>
+            <option value="interview">Interview Prep</option>
+          </select>
+          <select class="select" id="upskill-new-priority">
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+          </select>
+          <button class="btn" id="upskill-add">Add</button>
+        </div>
+      </div>
+
+      <!-- Skills list -->
+      <div id="upskill-track-blocks"></div>
+    </section>
   </main>
 </div>
 
@@ -557,14 +601,18 @@ button{cursor:pointer}
     return '' +
       '<div class="task" data-task="' + task.id + '">' +
         '<button class="check ' + (task.status === "done" ? "done" : "") + '" data-action="toggle-task" title="Mark done"></button>' +
-        '<div class="task-main" data-action="open-task">' +
-          '<div class="task-title ' + (task.status === "done" ? "done" : "") + '">' + escapeHtml(task.title) + '</div>' +
-          '<div class="meta">' +
-            '<span class="pill ' + task.status + '">' + escapeHtml(task.status) + '</span>' +
-            '<span>' + escapeHtml(projectName(task.projectId || "general")) + '</span>' +
-            (task.priority === "high" ? '<span class="pill high">High priority</span>' : '<span>Normal</span>') +
-            due +
-          '</div>' +
+        '<div class="task-main">' +
+          '<button style="background:none;border:0;color:inherit;text-align:left;padding:0;cursor:pointer;width:100%" data-action="open-task">' +
+            '<div class="task-title ' + (task.status === "done" ? "done" : "") + '">' + escapeHtml(task.title) + '</div>' +
+            '<div class="meta">' +
+              '<span class="pill ' + task.status + '">' + escapeHtml(task.status) + '</span>' +
+              '<span>' + escapeHtml(projectName(task.projectId || "general")) + '</span>' +
+              (task.priority === "high" ? '<span class="pill high">High priority</span>' : '<span>Normal</span>') +
+              due +
+            '</div>' +
+          '</button>' +
+          (task.desc ? '<div style="font-size:11px;color:var(--faint);margin-top:4px;padding-left:2px">' + escapeHtml(task.desc) + '</div>' : '') +
+          (task.subtasks && task.subtasks.length ? '<div style="font-size:11px;color:var(--faint);margin-top:4px;padding-left:2px">↳ ' + task.subtasks.filter(function(s){return s.done;}).length + '/' + task.subtasks.length + ' subtasks done</div>' : '') +
         '</div>' +
         '<select class="select" data-action="status-task" style="width:112px">' +
           '<option value="todo"' + (task.status === "todo" ? " selected" : "") + '>To do</option>' +
@@ -673,7 +721,6 @@ button{cursor:pointer}
       '<div class="link-card" data-link="' + link.id + '">' +
         '<button class="icon-btn" data-action="delete-link" style="position:absolute;right:8px;top:6px">x</button>' +
         '<a href="' + escapeHtml(link.url) + '" target="_blank" rel="noreferrer">' + escapeHtml(link.name) + '</a>' +
-        '<small>' + escapeHtml(projectName(link.projectId)) + '</small>' +
       '</div>';
   }
   function renderLinks(){
@@ -958,7 +1005,7 @@ button{cursor:pointer}
   function switchView(viewId){
     document.querySelectorAll(".view").forEach(function(view){ view.classList.toggle("active", view.id === viewId); });
     document.querySelectorAll(".nav button").forEach(function(button){ button.classList.toggle("active", button.getAttribute("data-view") === viewId); });
-    var label = {dashboard:"Dashboard",tasks:"Tasks",calendar:"Calendar",links:"Quick Links",projectsView:"Projects",eventgen:"Event Generator",kpi:"KPI Tracking",notes:"Ops Notes",resources:"Resources",journey:"Journey"}[viewId] || "Dashboard";
+    var label = {dashboard:"Dashboard",tasks:"Tasks",calendar:"Calendar",links:"Quick Links",projectsView:"Projects",eventgen:"Event Generator",kpi:"KPI Tracking",notes:"Ops Notes",resources:"Resources",journey:"Journey",upskill:"🎯 Upskill Planner"}[viewId] || "Dashboard";
     el("page-title").textContent = label;
   }
   function openModal(id){ el(id).classList.add("open"); }
@@ -976,6 +1023,13 @@ button{cursor:pointer}
     renderResources();
     renderMilestones();
   }
+
+  // upskill re-render on nav switch
+  document.querySelectorAll(".nav button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      if(btn.getAttribute("data-view") === "upskill") renderUpskill();
+    });
+  });
 
   document.querySelectorAll(".nav button").forEach(function(button){
     button.addEventListener("click", function(){ switchView(button.getAttribute("data-view")); });
@@ -1190,7 +1244,118 @@ button{cursor:pointer}
     }
   });
 
+  // ── UPSKILL PLANNER ──────────────────────────────────────────────
+  var DEFAULT_UPSKILL_ITEMS = [
+    // Web3 → Traditional
+    {id:"us1", track:"translation", title:"Reframe 'DAO community management' → 'self-governing brand community'", done:false, priority:"high", note:"Use this in every intro and cover letter"},
+    {id:"us2", track:"translation", title:"Reframe 'AMA for token launches' → 'live brand engagement events'", done:false, priority:"high", note:""},
+    {id:"us3", track:"translation", title:"Reframe 'alpha channel moderation' → 'exclusive high-value member tier management'", done:false, priority:"normal", note:""},
+    {id:"us4", track:"translation", title:"Reframe 'NFT holder engagement' → 'loyalty program community nurturing'", done:false, priority:"normal", note:""},
+    {id:"us5", track:"translation", title:"Write a 3-sentence 'About Me' that works for non-Web3 companies", done:false, priority:"high", note:"Practice saying it out loud 5x"},
+    {id:"us6", track:"translation", title:"Build a translation cheat sheet: Web3 jargon → traditional marketing language", done:false, priority:"normal", note:"Keep this handy for interviews"},
+    // New Tools
+    {id:"us7", track:"tools", title:"Learn Notion basics — create a mock community SOP doc", done:false, priority:"high", note:"Free tier is enough. Focus on tables and linked databases"},
+    {id:"us8", track:"tools", title:"Explore Common Room or Orbit — understand community analytics dashboards", done:false, priority:"high", note:"These are what non-Web3 companies use to track engagement"},
+    {id:"us9", track:"tools", title:"Try Beehiiv or ConvertKit — understand newsletter/email community tools", done:false, priority:"normal", note:"Music industry uses these a lot for fan communities"},
+    {id:"us10", track:"tools", title:"Learn Typefully or Publer — social scheduling beyond Discord", done:false, priority:"normal", note:""},
+    {id:"us11", track:"tools", title:"Sign up for Gamma — practice making a community pitch deck", done:false, priority:"normal", note:"Useful for future job applications and client pitches"},
+    // AI Automation
+    {id:"us12", track:"automation", title:"Sign up for Make (formerly Integromat) — free tier", done:false, priority:"high", note:"No coding needed. Start with their beginner templates"},
+    {id:"us13", track:"automation", title:"Build your first Make scenario: Google Form → auto-post to Discord channel", done:false, priority:"high", note:"This alone will impress any CM hiring manager"},
+    {id:"us14", track:"automation", title:"Build a Make scenario: New community member → welcome DM + log to Notion", done:false, priority:"normal", note:""},
+    {id:"us15", track:"automation", title:"Use Claude/ChatGPT to draft a 1-week Discord content calendar", done:false, priority:"high", note:"Practice the prompt: 'Act as a community manager for a [music/Web3] brand...'"},
+    {id:"us16", track:"automation", title:"Try Notion AI — use it to summarize your weekly community reports", done:false, priority:"normal", note:""},
+    {id:"us17", track:"automation", title:"Explore Zapier — connect Discord alerts to a Google Sheet tracker", done:false, priority:"normal", note:"Alternative to Make, slightly simpler"},
+    // Interview Prep
+    {id:"us18", track:"interview", title:"Write and rehearse your 3-sentence introduction out loud (not memorized, just natural)", done:false, priority:"high", note:"Who you are → What you do → Why you're here"},
+    {id:"us19", track:"interview", title:"Prepare 3 specific ENE stories using STAR format (Situation, Task, Action, Result)", done:false, priority:"high", note:"These become your answers to 'Tell me about a time when...'"},
+    {id:"us20", track:"interview", title:"Practice answering: 'Why do you want to work outside Web3?'", done:false, priority:"high", note:"Frame it as growth, not escape"},
+    {id:"us21", track:"interview", title:"Practice answering: 'What does your day-to-day look like as a CM?'", done:false, priority:"normal", note:""},
+    {id:"us22", track:"interview", title:"Record yourself answering one question — watch it back once", done:false, priority:"normal", note:"You'll catch your own patterns (repeating, stuttering) faster this way"},
+    {id:"us23", track:"interview", title:"Research the company before every interview — find 1 thing to mention", done:false, priority:"high", note:"Shows genuine interest, not just job hunting"},
+  ];
+
+  var upskillItems = storageGet("upskillItems", DEFAULT_UPSKILL_ITEMS);
+  var upskillTrackFilter = storageText("upskillTrackFilter", "all");
+
+  var TRACK_LABELS = {translation:"Web3 → Traditional", tools:"New Tools", automation:"AI Automation", interview:"Interview Prep"};
+  var TRACK_ORDER = ["translation","tools","automation","interview"];
+
+  function saveUpskill(){ storageSet("upskillItems", upskillItems); }
+
+  function renderUpskillStats(){
+    var total = upskillItems.length;
+    var done = upskillItems.filter(function(i){ return i.done; }).length;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    var byTrack = {};
+    TRACK_ORDER.forEach(function(t){ byTrack[t] = {total:0,done:0}; });
+    upskillItems.forEach(function(i){ if(byTrack[i.track]){ byTrack[i.track].total++; if(i.done) byTrack[i.track].done++; } });
+    el("upskill-stats").innerHTML =
+      '<div class="stat"><small>Overall progress</small><strong style="color:var(--accent)">' + pct + '%</strong><span>' + done + ' of ' + total + ' completed</span><div class="progress" style="margin-top:8px"><div class="bar" style="width:' + pct + '%"></div></div></div>' +
+      '<div class="stat"><small>Web3 → Traditional</small><strong>' + byTrack.translation.done + '/' + byTrack.translation.total + '</strong><span>reframes learned</span></div>' +
+      '<div class="stat"><small>Automation tasks</small><strong>' + byTrack.automation.done + '/' + byTrack.automation.total + '</strong><span>workflows built</span></div>';
+  }
+
+  function renderUpskillItems(){
+    var tracks = upskillTrackFilter === "all" ? TRACK_ORDER : [upskillTrackFilter];
+    var html = "";
+    tracks.forEach(function(track){
+      var items = upskillItems.filter(function(i){ return i.track === track; });
+      if(!items.length) return;
+      var doneCount = items.filter(function(i){ return i.done; }).length;
+      var pct = Math.round((doneCount/items.length)*100);
+      html += '<div class="upskill-track">';
+      html += '<div class="panel">';
+      html += '<div class="upskill-track-head"><div class="upskill-track-title"><span class="track-badge ' + track + '">' + escapeHtml(TRACK_LABELS[track]) + '</span></div><span class="hint">' + doneCount + '/' + items.length + ' done</span></div>';
+      html += '<div class="progress" style="margin-bottom:14px"><div class="bar" style="width:' + pct + '%"></div></div>';
+      items.forEach(function(item){
+        html += '<div class="upskill-item" data-upskill="' + item.id + '">' +
+          '<button class="check ' + (item.done ? "done" : "") + '" data-action="toggle-upskill" title="Mark done"></button>' +
+          '<div class="upskill-item-main">' +
+            '<div class="upskill-item-title ' + (item.done ? "done" : "") + '">' + escapeHtml(item.title) + '</div>' +
+            (item.note ? '<div class="upskill-note">💡 ' + escapeHtml(item.note) + '</div>' : '') +
+            '<div class="upskill-item-sub"><span class="pill ' + (item.priority === "high" ? "high" : "todo") + '">' + (item.priority === "high" ? "High priority" : "Normal") + '</span></div>' +
+          '</div>' +
+          '<button class="icon-btn" data-action="delete-upskill" title="Delete">x</button>' +
+        '</div>';
+      });
+      html += '</div></div>';
+    });
+    el("upskill-track-blocks").innerHTML = html || '<div class="empty">No items in this track yet.</div>';
+  }
+
+  function renderUpskill(){ renderUpskillStats(); renderUpskillItems(); }
+
+  el("upskill-track-filter").addEventListener("change", function(e){
+    upskillTrackFilter = e.target.value;
+    storageTextSet("upskillTrackFilter", upskillTrackFilter);
+    renderUpskillItems();
+  });
+
+  el("upskill-add").addEventListener("click", function(){
+    var title = el("upskill-new-title").value.trim();
+    if(!title){ toast("Add a skill name first"); return; }
+    upskillItems.push({id:uid("us"), track:el("upskill-new-track").value, title:title, done:false, priority:el("upskill-new-priority").value, note:""});
+    el("upskill-new-title").value = "";
+    saveUpskill(); renderUpskill(); toast("Skill added!");
+  });
+
+  el("upskill-track-blocks").addEventListener("click", function(e){
+    var box = e.target.closest("[data-upskill]");
+    if(!box) return;
+    var id = box.getAttribute("data-upskill");
+    if(e.target.getAttribute("data-action") === "toggle-upskill"){
+      var item = upskillItems.find(function(i){ return i.id === id; });
+      if(item){ item.done = !item.done; saveUpskill(); renderUpskill(); toast(item.done ? "✓ Marked complete!" : "Marked incomplete"); }
+    }
+    if(e.target.getAttribute("data-action") === "delete-upskill"){
+      upskillItems = upskillItems.filter(function(i){ return i.id !== id; });
+      saveUpskill(); renderUpskill(); toast("Removed");
+    }
+  });
+
   renderAll();
+  renderUpskill();
 })();
 </script>
 </body>
