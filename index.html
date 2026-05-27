@@ -1245,112 +1245,247 @@ button{cursor:pointer}
   });
 
   // ── UPSKILL PLANNER ──────────────────────────────────────────────
-  var DEFAULT_UPSKILL_ITEMS = [
-    // Web3 → Traditional
-    {id:"us1", track:"translation", title:"Reframe 'DAO community management' → 'self-governing brand community'", done:false, priority:"high", note:"Use this in every intro and cover letter"},
-    {id:"us2", track:"translation", title:"Reframe 'AMA for token launches' → 'live brand engagement events'", done:false, priority:"high", note:""},
-    {id:"us3", track:"translation", title:"Reframe 'alpha channel moderation' → 'exclusive high-value member tier management'", done:false, priority:"normal", note:""},
-    {id:"us4", track:"translation", title:"Reframe 'NFT holder engagement' → 'loyalty program community nurturing'", done:false, priority:"normal", note:""},
-    {id:"us5", track:"translation", title:"Write a 3-sentence 'About Me' that works for non-Web3 companies", done:false, priority:"high", note:"Practice saying it out loud 5x"},
-    {id:"us6", track:"translation", title:"Build a translation cheat sheet: Web3 jargon → traditional marketing language", done:false, priority:"normal", note:"Keep this handy for interviews"},
-    // New Tools
-    {id:"us7", track:"tools", title:"Learn Notion basics — create a mock community SOP doc", done:false, priority:"high", note:"Free tier is enough. Focus on tables and linked databases"},
-    {id:"us8", track:"tools", title:"Explore Common Room or Orbit — understand community analytics dashboards", done:false, priority:"high", note:"These are what non-Web3 companies use to track engagement"},
-    {id:"us9", track:"tools", title:"Try Beehiiv or ConvertKit — understand newsletter/email community tools", done:false, priority:"normal", note:"Music industry uses these a lot for fan communities"},
-    {id:"us10", track:"tools", title:"Learn Typefully or Publer — social scheduling beyond Discord", done:false, priority:"normal", note:""},
-    {id:"us11", track:"tools", title:"Sign up for Gamma — practice making a community pitch deck", done:false, priority:"normal", note:"Useful for future job applications and client pitches"},
-    // AI Automation
-    {id:"us12", track:"automation", title:"Sign up for Make (formerly Integromat) — free tier", done:false, priority:"high", note:"No coding needed. Start with their beginner templates"},
-    {id:"us13", track:"automation", title:"Build your first Make scenario: Google Form → auto-post to Discord channel", done:false, priority:"high", note:"This alone will impress any CM hiring manager"},
-    {id:"us14", track:"automation", title:"Build a Make scenario: New community member → welcome DM + log to Notion", done:false, priority:"normal", note:""},
-    {id:"us15", track:"automation", title:"Use Claude/ChatGPT to draft a 1-week Discord content calendar", done:false, priority:"high", note:"Practice the prompt: 'Act as a community manager for a [music/Web3] brand...'"},
-    {id:"us16", track:"automation", title:"Try Notion AI — use it to summarize your weekly community reports", done:false, priority:"normal", note:""},
-    {id:"us17", track:"automation", title:"Explore Zapier — connect Discord alerts to a Google Sheet tracker", done:false, priority:"normal", note:"Alternative to Make, slightly simpler"},
-    // Interview Prep
-    {id:"us18", track:"interview", title:"Write and rehearse your 3-sentence introduction out loud (not memorized, just natural)", done:false, priority:"high", note:"Who you are → What you do → Why you're here"},
-    {id:"us19", track:"interview", title:"Prepare 3 specific ENE stories using STAR format (Situation, Task, Action, Result)", done:false, priority:"high", note:"These become your answers to 'Tell me about a time when...'"},
-    {id:"us20", track:"interview", title:"Practice answering: 'Why do you want to work outside Web3?'", done:false, priority:"high", note:"Frame it as growth, not escape"},
-    {id:"us21", track:"interview", title:"Practice answering: 'What does your day-to-day look like as a CM?'", done:false, priority:"normal", note:""},
-    {id:"us22", track:"interview", title:"Record yourself answering one question — watch it back once", done:false, priority:"normal", note:"You'll catch your own patterns (repeating, stuttering) faster this way"},
-    {id:"us23", track:"interview", title:"Research the company before every interview — find 1 thing to mention", done:false, priority:"high", note:"Shows genuine interest, not just job hunting"},
+  var DEFAULT_UPSKILL_TRACKS = [
+    {id:"translation", label:"Web3 → Traditional", color:"#9ac4e8"},
+    {id:"tools",       label:"New Tools",           color:"#99d19c"},
+    {id:"automation",  label:"AI Automation",       color:"#e5c46f"},
+    {id:"interview",   label:"Interview Prep",      color:"#c9a8ef"}
   ];
 
-  var upskillItems = storageGet("upskillItems", DEFAULT_UPSKILL_ITEMS);
+  var DEFAULT_UPSKILL_ITEMS = [
+    {id:"us1",  track:"translation", title:"Reframe 'DAO community management' → 'self-governing brand community'",             done:false, priority:"high",   note:"Use this in every intro and cover letter"},
+    {id:"us2",  track:"translation", title:"Reframe 'AMA for token launches' → 'live brand engagement events'",                done:false, priority:"high",   note:""},
+    {id:"us3",  track:"translation", title:"Reframe 'alpha channel moderation' → 'exclusive high-value member tier management'",done:false, priority:"normal", note:""},
+    {id:"us4",  track:"translation", title:"Reframe 'NFT holder engagement' → 'loyalty program community nurturing'",          done:false, priority:"normal", note:""},
+    {id:"us5",  track:"translation", title:"Write a 3-sentence 'About Me' that works for non-Web3 companies",                  done:false, priority:"high",   note:"Practice saying it out loud 5x"},
+    {id:"us6",  track:"translation", title:"Build a translation cheat sheet: Web3 jargon → traditional marketing language",    done:false, priority:"normal", note:"Keep this handy for interviews"},
+    {id:"us7",  track:"tools",       title:"Learn Notion basics — create a mock community SOP doc",                            done:false, priority:"high",   note:"Free tier is enough. Focus on tables and linked databases"},
+    {id:"us8",  track:"tools",       title:"Explore Common Room or Orbit — understand community analytics dashboards",         done:false, priority:"high",   note:"These are what non-Web3 companies use to track engagement"},
+    {id:"us9",  track:"tools",       title:"Try Beehiiv or ConvertKit — understand newsletter/email community tools",          done:false, priority:"normal", note:"Music industry uses these a lot for fan communities"},
+    {id:"us10", track:"tools",       title:"Learn Typefully or Publer — social scheduling beyond Discord",                     done:false, priority:"normal", note:""},
+    {id:"us11", track:"tools",       title:"Sign up for Gamma — practice making a community pitch deck",                       done:false, priority:"normal", note:"Useful for future job applications and client pitches"},
+    {id:"us12", track:"automation",  title:"Sign up for Make (formerly Integromat) — free tier",                               done:false, priority:"high",   note:"No coding needed. Start with their beginner templates"},
+    {id:"us13", track:"automation",  title:"Build your first Make scenario: Google Form → auto-post to Discord channel",       done:false, priority:"high",   note:"This alone will impress any CM hiring manager"},
+    {id:"us14", track:"automation",  title:"Build a Make scenario: New community member → welcome DM + log to Notion",        done:false, priority:"normal", note:""},
+    {id:"us15", track:"automation",  title:"Use Claude/ChatGPT to draft a 1-week Discord content calendar",                   done:false, priority:"high",   note:"Practice the prompt: 'Act as a community manager for a [music/Web3] brand...'"},
+    {id:"us16", track:"automation",  title:"Try Notion AI — use it to summarize your weekly community reports",               done:false, priority:"normal", note:""},
+    {id:"us17", track:"automation",  title:"Explore Zapier — connect Discord alerts to a Google Sheet tracker",               done:false, priority:"normal", note:"Alternative to Make, slightly simpler"},
+    {id:"us18", track:"interview",   title:"Write and rehearse your 3-sentence introduction out loud (not memorized, just natural)", done:false, priority:"high", note:"Who you are → What you do → Why you're here"},
+    {id:"us19", track:"interview",   title:"Prepare 3 specific ENE stories using STAR format (Situation, Task, Action, Result)",done:false, priority:"high",   note:"These become your answers to 'Tell me about a time when...'"},
+    {id:"us20", track:"interview",   title:"Practice answering: 'Why do you want to work outside Web3?'",                     done:false, priority:"high",   note:"Frame it as growth, not escape"},
+    {id:"us21", track:"interview",   title:"Practice answering: 'What does your day-to-day look like as a CM?'",              done:false, priority:"normal", note:""},
+    {id:"us22", track:"interview",   title:"Record yourself answering one question — watch it back once",                     done:false, priority:"normal", note:"You'll catch your own patterns (repeating, stuttering) faster this way"},
+    {id:"us23", track:"interview",   title:"Research the company before every interview — find 1 thing to mention",           done:false, priority:"high",   note:"Shows genuine interest, not just job hunting"},
+  ];
+
+  var upskillTracks = storageGet("upskillTracks", DEFAULT_UPSKILL_TRACKS);
+  var upskillItems  = storageGet("upskillItems",  DEFAULT_UPSKILL_ITEMS);
   var upskillTrackFilter = storageText("upskillTrackFilter", "all");
+  var upskillEditingTrack = null; // id of track being renamed
 
-  var TRACK_LABELS = {translation:"Web3 → Traditional", tools:"New Tools", automation:"AI Automation", interview:"Interview Prep"};
-  var TRACK_ORDER = ["translation","tools","automation","interview"];
+  function saveUpskill(){
+    storageSet("upskillTracks", upskillTracks);
+    storageSet("upskillItems",  upskillItems);
+  }
 
-  function saveUpskill(){ storageSet("upskillItems", upskillItems); }
+  function trackById(id){ return upskillTracks.find(function(t){ return t.id === id; }); }
+  function trackLabel(id){ var t = trackById(id); return t ? t.label : id; }
+  function trackColor(id){ var t = trackById(id); return t ? t.color : "#888"; }
+
+  // Rebuild the filter <select> and the "add item" track <select>
+  function renderUpskillSelects(){
+    var filterOpts = '<option value="all">All Tracks</option>' +
+      upskillTracks.map(function(t){ return '<option value="' + t.id + '"' + (upskillTrackFilter === t.id ? " selected" : "") + '>' + escapeHtml(t.label) + '</option>'; }).join("");
+    el("upskill-track-filter").innerHTML = filterOpts;
+
+    var trackOpts = upskillTracks.map(function(t){ return '<option value="' + t.id + '">' + escapeHtml(t.label) + '</option>'; }).join("");
+    el("upskill-new-track").innerHTML = trackOpts;
+  }
 
   function renderUpskillStats(){
     var total = upskillItems.length;
-    var done = upskillItems.filter(function(i){ return i.done; }).length;
-    var pct = total ? Math.round((done/total)*100) : 0;
-    var byTrack = {};
-    TRACK_ORDER.forEach(function(t){ byTrack[t] = {total:0,done:0}; });
-    upskillItems.forEach(function(i){ if(byTrack[i.track]){ byTrack[i.track].total++; if(i.done) byTrack[i.track].done++; } });
+    var done  = upskillItems.filter(function(i){ return i.done; }).length;
+    var pct   = total ? Math.round((done / total) * 100) : 0;
+    var first2 = upskillTracks.slice(0, 2);
     el("upskill-stats").innerHTML =
       '<div class="stat"><small>Overall progress</small><strong style="color:var(--accent)">' + pct + '%</strong><span>' + done + ' of ' + total + ' completed</span><div class="progress" style="margin-top:8px"><div class="bar" style="width:' + pct + '%"></div></div></div>' +
-      '<div class="stat"><small>Web3 → Traditional</small><strong>' + byTrack.translation.done + '/' + byTrack.translation.total + '</strong><span>reframes learned</span></div>' +
-      '<div class="stat"><small>Automation tasks</small><strong>' + byTrack.automation.done + '/' + byTrack.automation.total + '</strong><span>workflows built</span></div>';
+      first2.map(function(t){
+        var tItems = upskillItems.filter(function(i){ return i.track === t.id; });
+        var tDone  = tItems.filter(function(i){ return i.done; }).length;
+        return '<div class="stat"><small>' + escapeHtml(t.label) + '</small><strong>' + tDone + '/' + tItems.length + '</strong><span>completed</span></div>';
+      }).join("");
   }
 
-  function renderUpskillItems(){
-    var tracks = upskillTrackFilter === "all" ? TRACK_ORDER : [upskillTrackFilter];
+  function renderUpskillTracks(){
+    var visibleIds = upskillTrackFilter === "all" ? upskillTracks.map(function(t){ return t.id; }) : [upskillTrackFilter];
     var html = "";
-    tracks.forEach(function(track){
-      var items = upskillItems.filter(function(i){ return i.track === track; });
-      if(!items.length) return;
-      var doneCount = items.filter(function(i){ return i.done; }).length;
-      var pct = Math.round((doneCount/items.length)*100);
-      html += '<div class="upskill-track">';
-      html += '<div class="panel">';
-      html += '<div class="upskill-track-head"><div class="upskill-track-title"><span class="track-badge ' + track + '">' + escapeHtml(TRACK_LABELS[track]) + '</span></div><span class="hint">' + doneCount + '/' + items.length + ' done</span></div>';
-      html += '<div class="progress" style="margin-bottom:14px"><div class="bar" style="width:' + pct + '%"></div></div>';
-      items.forEach(function(item){
-        html += '<div class="upskill-item" data-upskill="' + item.id + '">' +
-          '<button class="check ' + (item.done ? "done" : "") + '" data-action="toggle-upskill" title="Mark done"></button>' +
-          '<div class="upskill-item-main">' +
-            '<div class="upskill-item-title ' + (item.done ? "done" : "") + '">' + escapeHtml(item.title) + '</div>' +
-            (item.note ? '<div class="upskill-note">💡 ' + escapeHtml(item.note) + '</div>' : '') +
-            '<div class="upskill-item-sub"><span class="pill ' + (item.priority === "high" ? "high" : "todo") + '">' + (item.priority === "high" ? "High priority" : "Normal") + '</span></div>' +
-          '</div>' +
-          '<button class="icon-btn" data-action="delete-upskill" title="Delete">x</button>' +
+
+    // ── Manage Tracks panel ──────────────────────────
+    html += '<div class="panel" style="margin-bottom:14px">';
+    html += '<div class="upskill-track-head" style="margin-bottom:10px"><div class="upskill-track-title" style="font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em">Manage Tabs</div></div>';
+    html += '<div id="upskill-tab-list" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">';
+    upskillTracks.forEach(function(t){
+      if(upskillEditingTrack === t.id){
+        html += '<div class="upskill-tab-edit" data-tab="' + t.id + '" style="display:flex;gap:6px;align-items:center">' +
+          '<input class="input" id="upskill-rename-input" value="' + escapeHtml(t.label) + '" style="width:160px;padding:4px 8px;font-size:12px" />' +
+          '<button class="btn" style="padding:4px 10px;font-size:12px" data-action="save-rename-track">Save</button>' +
+          '<button class="btn ghost" style="padding:4px 10px;font-size:12px" data-action="cancel-rename-track">Cancel</button>' +
         '</div>';
-      });
+      } else {
+        var count = upskillItems.filter(function(i){ return i.track === t.id; }).length;
+        html += '<div class="upskill-tab-pill" data-tab="' + t.id + '" style="display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--soft);border-radius:999px;padding:5px 10px 5px 12px">' +
+          '<span style="width:8px;height:8px;border-radius:50%;background:' + t.color + ';flex-shrink:0"></span>' +
+          '<span style="font-size:12px;font-weight:600">' + escapeHtml(t.label) + '</span>' +
+          '<span style="font-size:11px;color:var(--faint);margin-left:2px">(' + count + ')</span>' +
+          '<button class="icon-btn" data-action="rename-track" title="Rename" style="margin-left:4px;font-size:11px;opacity:.7">✎</button>' +
+          '<button class="icon-btn" data-action="delete-track" title="Delete tab" style="font-size:11px;opacity:.7">x</button>' +
+        '</div>';
+      }
+    });
+    // Add new tab inline
+    html += '<div style="display:flex;gap:6px;align-items:center">' +
+      '<input class="input" id="upskill-new-tab-name" placeholder="New tab name..." style="width:150px;padding:4px 8px;font-size:12px" />' +
+      '<button class="btn ghost" id="upskill-add-track" style="padding:4px 10px;font-size:12px">+ Add Tab</button>' +
+    '</div>';
+    html += '</div></div>';
+
+    // ── Items per track ──────────────────────────────
+    visibleIds.forEach(function(trackId){
+      var t = trackById(trackId);
+      if(!t) return;
+      var items    = upskillItems.filter(function(i){ return i.track === trackId; });
+      var doneCount = items.filter(function(i){ return i.done; }).length;
+      var pct      = items.length ? Math.round((doneCount / items.length) * 100) : 0;
+      html += '<div class="upskill-track"><div class="panel">';
+      html += '<div class="upskill-track-head">' +
+        '<div class="upskill-track-title">' +
+          '<span style="display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--soft);border-radius:999px;padding:4px 12px">' +
+            '<span style="width:8px;height:8px;border-radius:50%;background:' + t.color + ';flex-shrink:0"></span>' +
+            '<span style="font-size:12px;font-weight:700">' + escapeHtml(t.label) + '</span>' +
+          '</span>' +
+        '</div>' +
+        '<span class="hint">' + doneCount + '/' + items.length + ' done</span>' +
+      '</div>';
+      html += '<div class="progress" style="margin-bottom:14px"><div class="bar" style="width:' + pct + '%"></div></div>';
+      if(!items.length){
+        html += '<div class="empty" style="padding:10px 0">No items yet — add one above.</div>';
+      } else {
+        items.forEach(function(item){
+          html += '<div class="upskill-item" data-upskill="' + item.id + '">' +
+            '<button class="check ' + (item.done ? "done" : "") + '" data-action="toggle-upskill"></button>' +
+            '<div class="upskill-item-main">' +
+              '<div class="upskill-item-title ' + (item.done ? "done" : "") + '">' + escapeHtml(item.title) + '</div>' +
+              (item.note ? '<div class="upskill-note">💡 ' + escapeHtml(item.note) + '</div>' : '') +
+              '<div class="upskill-item-sub"><span class="pill ' + (item.priority === "high" ? "high" : "todo") + '">' + (item.priority === "high" ? "High priority" : "Normal") + '</span></div>' +
+            '</div>' +
+            '<button class="icon-btn" data-action="delete-upskill">x</button>' +
+          '</div>';
+        });
+      }
       html += '</div></div>';
     });
-    el("upskill-track-blocks").innerHTML = html || '<div class="empty">No items in this track yet.</div>';
+
+    el("upskill-track-blocks").innerHTML = html;
+
+    // Wire up new-tab add button (rendered inside html so need fresh listener)
+    var addTabBtn = el("upskill-add-track");
+    if(addTabBtn){
+      addTabBtn.addEventListener("click", function(){
+        var name = el("upskill-new-tab-name").value.trim();
+        if(!name){ toast("Enter a tab name first"); return; }
+        var colors = ["#9ac4e8","#99d19c","#e5c46f","#c9a8ef","#f4a26b","#f47b7b","#7bdff2"];
+        var color = colors[upskillTracks.length % colors.length];
+        upskillTracks.push({id:uid("track"), label:name, color:color});
+        el("upskill-new-tab-name").value = "";
+        saveUpskill(); renderUpskill(); toast("Tab added!");
+      });
+    }
+    // Rename input — save on Enter key
+    var renameInput = el("upskill-rename-input");
+    if(renameInput){
+      renameInput.focus();
+      renameInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter") doSaveRename();
+      });
+    }
   }
 
-  function renderUpskill(){ renderUpskillStats(); renderUpskillItems(); }
+  function doSaveRename(){
+    var input = el("upskill-rename-input");
+    if(!input || !upskillEditingTrack) return;
+    var newLabel = input.value.trim();
+    if(!newLabel){ toast("Name can't be empty"); return; }
+    var t = trackById(upskillEditingTrack);
+    if(t){ t.label = newLabel; }
+    upskillEditingTrack = null;
+    saveUpskill(); renderUpskill(); toast("Tab renamed!");
+  }
 
+  function renderUpskill(){ renderUpskillSelects(); renderUpskillStats(); renderUpskillTracks(); }
+
+  // Filter select
   el("upskill-track-filter").addEventListener("change", function(e){
     upskillTrackFilter = e.target.value;
     storageTextSet("upskillTrackFilter", upskillTrackFilter);
-    renderUpskillItems();
+    renderUpskillTracks();
   });
 
+  // Add item
   el("upskill-add").addEventListener("click", function(){
     var title = el("upskill-new-title").value.trim();
     if(!title){ toast("Add a skill name first"); return; }
+    if(!upskillTracks.length){ toast("Create a tab first"); return; }
     upskillItems.push({id:uid("us"), track:el("upskill-new-track").value, title:title, done:false, priority:el("upskill-new-priority").value, note:""});
     el("upskill-new-title").value = "";
     saveUpskill(); renderUpskill(); toast("Skill added!");
   });
 
+  // Delegated clicks inside the track blocks (items + tab pills)
   el("upskill-track-blocks").addEventListener("click", function(e){
-    var box = e.target.closest("[data-upskill]");
-    if(!box) return;
-    var id = box.getAttribute("data-upskill");
-    if(e.target.getAttribute("data-action") === "toggle-upskill"){
-      var item = upskillItems.find(function(i){ return i.id === id; });
-      if(item){ item.done = !item.done; saveUpskill(); renderUpskill(); toast(item.done ? "✓ Marked complete!" : "Marked incomplete"); }
+    // ── Item actions ──
+    var itemBox = e.target.closest("[data-upskill]");
+    if(itemBox){
+      var id = itemBox.getAttribute("data-upskill");
+      if(e.target.getAttribute("data-action") === "toggle-upskill"){
+        var item = upskillItems.find(function(i){ return i.id === id; });
+        if(item){ item.done = !item.done; saveUpskill(); renderUpskill(); toast(item.done ? "✓ Done!" : "Marked incomplete"); }
+        return;
+      }
+      if(e.target.getAttribute("data-action") === "delete-upskill"){
+        upskillItems = upskillItems.filter(function(i){ return i.id !== id; });
+        saveUpskill(); renderUpskill(); toast("Removed");
+        return;
+      }
     }
-    if(e.target.getAttribute("data-action") === "delete-upskill"){
-      upskillItems = upskillItems.filter(function(i){ return i.id !== id; });
-      saveUpskill(); renderUpskill(); toast("Removed");
+    // ── Tab pill actions ──
+    var tabPill = e.target.closest("[data-tab]");
+    if(!tabPill) return;
+    var tabId = tabPill.getAttribute("data-tab");
+    var action = e.target.getAttribute("data-action");
+
+    if(action === "rename-track"){
+      upskillEditingTrack = tabId;
+      renderUpskillTracks();
+      return;
+    }
+    if(action === "save-rename-track"){
+      doSaveRename();
+      return;
+    }
+    if(action === "cancel-rename-track"){
+      upskillEditingTrack = null;
+      renderUpskillTracks();
+      return;
+    }
+    if(action === "delete-track"){
+      var hasItems = upskillItems.some(function(i){ return i.track === tabId; });
+      if(hasItems){
+        toast("Remove all items in this tab first"); return;
+      }
+      upskillTracks = upskillTracks.filter(function(t){ return t.id !== tabId; });
+      if(upskillTrackFilter === tabId){ upskillTrackFilter = "all"; storageTextSet("upskillTrackFilter","all"); }
+      saveUpskill(); renderUpskill(); toast("Tab deleted");
+      return;
     }
   });
 
